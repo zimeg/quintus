@@ -15,7 +15,7 @@ import (
 // It should match main for the most part
 func TestCicero(t *testing.T) {
 	opts := udp.Options{
-		Port:       123,
+		Port:       12321,
 		PacketSize: 48,
 	}
 	conn, buff, err := udp.Start(opts)
@@ -25,7 +25,7 @@ func TestCicero(t *testing.T) {
 		require.NoError(t, err)
 		respond(conn, addr, buff)
 	}()
-	response, err := ntpclient.Time("localhost")
+	response, err := ntpclient.Time("localhost:12321")
 	require.NoError(t, err)
 	now := time.Now()
 	wait := now.Sub(response)
