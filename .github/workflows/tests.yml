@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
+name: Shares the current time
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+jobs:
+  ask:
+    name: Completes a request
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cicero
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install a flaked Nix
+        uses: DeterminateSystems/nix-installer-action@v13
+      - name: Install dependencies
+        run: nix develop -c go get
+      - name: Check formatting
+        run: nix develop -c make check
+      - name: Build binary
+        run: nix develop -c make build
+      - name: Run tests
+        run: nix develop -c go test -v ./... -coverprofile=coverage.txt
+      - name: Upload coverage results
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}

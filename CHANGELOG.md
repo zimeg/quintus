@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- ci: confirm udp ntp requests for timings pass testing with success 2024-09-17
 - feat: serve ntp times over udp connections using the gregorian utc 2024-09-16
 
 [calver]: https://calver.org
