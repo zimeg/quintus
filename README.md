@@ -16,26 +16,18 @@ together makes twelve equal **thirty day** months with just a few days leftover:
 |  `5` |  21 |  22 |  23 |  24 |  25 |
 |  `6` |  26 |  27 |  28 |  29 |  30 |
 
-Nuances of this calendar are outlined in this [post][post] and elsewhere but
-this project focuses on timed implementation.
+Nuance of the calendar are outlined in this [post][post] and elsewhere but this
+project focuses on timed implementation.
 
 ## Following the Quintus Time Server (QTS)
 
-Part of this project is dedicated to serving the true times in computer format:
+Part of this project is dedicated to serving the true times in computer format
+using the [Network Time Protocol][ntp]:
 
 ```sh
-$ cd cicero
-$ make start
+$ sntp 3.84.149.188
 ...
-2024/09/12 23:38:20 UDP server listening for NTP requests on port :123
-```
-
-Matching that calendar using the [Network Time Protocol][ntp]:
-
-```sh
-$ sntp localhost
-...
-2024-09-12 23:38:27.212830 (+0700) -0.212726 +/- 0.141832 localhost ::1 s1 no-leap
+2024-09-21 22:08:36.024433 (+0700) -0.988038 +/- 0.658707 3.84.149.188 s1 no-leap
 ```
 
 > 🚧 While other setup happens, this program aligns with a Gregorian calendar.

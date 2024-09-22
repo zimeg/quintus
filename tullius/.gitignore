@@ -1,0 +1,8 @@
+# Development settings
+.direnv
+
+# Infrastructure knowns
+.terraform
+
+# Server secrets
+*.pem

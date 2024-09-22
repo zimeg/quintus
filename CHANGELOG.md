@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: serve incoming time requests with configured cloud computing 2024-09-25
 - ci: confirm changes are made to the changelog before merges happen 2024-09-17
 - ci: confirm udp ntp requests for timings pass testing with success 2024-09-17
 - feat: serve ntp times over udp connections using the gregorian utc 2024-09-16

@@ -4,3 +4,6 @@ kod
 
 # Build compilations
 cicero
+
+# Server setups
+*.qcow2
