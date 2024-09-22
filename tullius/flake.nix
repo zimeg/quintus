@@ -30,7 +30,7 @@
         system.stateVersion = "24.05";
         networking = {
           firewall = {
-            allowedTCPPorts = [ 80 443 ];
+            allowedTCPPorts = [ 443 ];
             allowedUDPPorts = [ 123 ];
           };
         };
