@@ -1,5 +1,5 @@
 {
-  description = "setups to manage setups";
+  description = "the teller of time";
   inputs = {
     flake-utils = {
       url = "github:numtide/flake-utils";
@@ -29,9 +29,14 @@
       configurations = {
         system.stateVersion = "24.05";
         networking = {
+          hostName = "tullius";
           firewall = {
+            enable = true;
             allowedTCPPorts = [ 443 ];
             allowedUDPPorts = [ 123 ];
+          };
+          networkmanager = {
+            enable = true;
           };
         };
         systemd.services.cicero = {
@@ -45,6 +50,9 @@
             Restart = "always";
             Type = "simple";
           };
+        };
+        time = {
+          timeZone = "Etc/UTC";
         };
       };
       name = "cicero-${system}";
