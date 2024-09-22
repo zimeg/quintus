@@ -14,15 +14,6 @@
         allowedUDPPorts = [ 123 ];
       };
     };
-    services.openssh = {
-      enable = true;
-      settings = {
-        KbdInteractiveAuthentication = false;
-        PasswordAuthentication = false;
-        PermitRootLogin = "prohibit-password";
-        PubkeyAuthentication = true;
-      };
-    };
     systemd.services = {
       cicero = {
         enable = true;

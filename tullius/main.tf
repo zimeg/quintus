@@ -12,11 +12,6 @@ terraform {
       source  = "opentofu/aws"
       version = "5.66.0"
     }
-    # https://search.opentofu.org/provider/opentofu/local/latest
-    local = {
-      source  = "opentofu/local"
-      version = "2.5.1"
-    }
     # https://search.opentofu.org/provider/opentofu/null/latest
     null = {
       source  = "opentofu/null"
@@ -26,11 +21,6 @@ terraform {
     random = {
       source  = "opentofu/random"
       version = "3.6.2"
-    }
-    # https://search.opentofu.org/provider/opentofu/tls/latest
-    tls = {
-      source  = "opentofu/tls"
-      version = "4.0.5"
     }
   }
 
