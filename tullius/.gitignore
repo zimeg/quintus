@@ -1,0 +1,5 @@
+# Development settings
+.direnv
+
+# Infrastructure knowns
+.terraform
