@@ -1,6 +1,6 @@
 # 🗓️ quintus
 
-> a five day calendar
+> five day calendar
 
 ## Counting the weeks to make a month
 
@@ -25,9 +25,9 @@ Part of this project is dedicated to serving the true times in computer format
 with the [Network Time Protocol][ntp]:
 
 ```sh
-$ sntp 3.84.149.188
+$ sntp quintus.sh
 ...
-2024-09-21 22:08:36.024433 (+0700) -0.988038 +/- 0.658707 3.84.149.188 s1 no-leap
+2024-09-22 16:24:11.756589 (+0700) -0.719544 +/- 0.479711 quintus.sh 3.84.124.11 s1 no-leap
 ```
 
 > 🚧 While other setup happens, this program aligns with a Gregorian calendar.
