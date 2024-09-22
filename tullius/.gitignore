@@ -3,6 +3,3 @@
 
 # Infrastructure knowns
 .terraform
-
-# Server secrets
-*.pem
