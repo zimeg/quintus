@@ -1,3 +1,4 @@
+# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/acm_certificate
 resource "aws_acm_certificate" "cert" {
   domain_name       = var.domain
   validation_method = "DNS"
@@ -7,6 +8,7 @@ resource "aws_acm_certificate" "cert" {
   }
 }
 
+# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/route53_record
 resource "aws_route53_record" "default_records" {
   for_each = {
     for dvo in aws_acm_certificate.cert.domain_validation_options : dvo.domain_name => {
