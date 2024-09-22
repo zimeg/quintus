@@ -16,13 +16,13 @@ together makes twelve equal **thirty day** months with just a few days leftover:
 |  `5` |  21 |  22 |  23 |  24 |  25 |
 |  `6` |  26 |  27 |  28 |  29 |  30 |
 
-Nuance of the calendar are outlined in this [post][post] and elsewhere but this
+Nuance of the calendar are outlined in [post][post] and elsewhere but this
 project focuses on timed implementation.
 
 ## Following the Quintus Time Server (QTS)
 
 Part of this project is dedicated to serving the true times in computer format
-using the [Network Time Protocol][ntp]:
+with the [Network Time Protocol][ntp]:
 
 ```sh
 $ sntp 3.84.149.188
