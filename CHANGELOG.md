@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix!: follow the quintus calendar when handling the time protocols 2024-09-26
 - feat: await incoming requests on a stable public quintus sh domain 2024-09-26
 - feat: serve incoming time requests with configured cloud computing 2024-09-26
 - ci: confirm changes are made to the changelog before merges happen 2024-09-17

@@ -27,10 +27,8 @@ with the [Network Time Protocol][ntp]:
 ```sh
 $ sntp quintus.sh
 ...
-2024-09-22 16:24:11.756589 (+0700) -0.719544 +/- 0.479711 quintus.sh 3.84.124.11 s1 no-leap
+2024-09-22 22:40:36.017959 (+0700) +345599.982155 +/- 230399.988118 quintus.sh 3.84.124.11 s1 no-leap
 ```
-
-> 🚧 While other setup happens, this program aligns with a Gregorian calendar.
 
 [post]: https://o526.net/blog/post/five-day-week/
 [ntp]: https://en.wikipedia.org/wiki/Network_Time_Protocol
