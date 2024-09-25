@@ -13,7 +13,7 @@ clean:
 
 .PHONY: start
 start: build
-	./cicero
+	HTTP_PORT=8080 ./cicero
 
 .PHONY: test
 test: check

@@ -5,6 +5,7 @@ import (
 	"net"
 
 	"github.com/zimeg/quintus/cicero/pkg/ntp"
+	"github.com/zimeg/quintus/cicero/pkg/tcp"
 	"github.com/zimeg/quintus/cicero/pkg/udp"
 )
 
@@ -30,6 +31,7 @@ func main() {
 		return
 	}
 	defer conn.Close()
+	go tcp.Listen()
 	for {
 		addr, err := conn.Read(buff)
 		if err != nil {

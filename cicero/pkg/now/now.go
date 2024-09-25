@@ -66,7 +66,7 @@ func (n *Now) Offset() uint64 {
 }
 
 // ToString converts internal representations of now into written string
-func (n *Now) ToString() string {
+func (n Now) ToString() string {
 	return fmt.Sprintf(
 		"%d-%02d-%02dT%02d:%02d:%02dZ",
 		n.year,
