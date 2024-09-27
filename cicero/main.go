@@ -3,7 +3,6 @@ package main
 import (
 	"log"
 	"net"
-	"time"
 
 	"github.com/zimeg/quintus/cicero/pkg/ntp"
 	"github.com/zimeg/quintus/cicero/pkg/udp"
@@ -11,8 +10,7 @@ import (
 
 // respond writes the NTP response to the UDP request
 func respond(conn udp.UDP, addr *net.UDPAddr, request []byte) {
-	now := time.Now()
-	packet := ntp.New(request, now)
+	packet := ntp.New(request)
 	err := conn.Write(packet.Marshal(), addr)
 	if err != nil {
 		log.Printf("Failed to write the NTP response: %s", err)

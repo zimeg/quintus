@@ -3,6 +3,8 @@ package ntp
 import (
 	"encoding/binary"
 	"time"
+
+	"github.com/zimeg/quintus/cicero/pkg/now"
 )
 
 // NTPPacket contains details about the values of an NTP packet
@@ -24,19 +26,19 @@ type NTPPacket struct {
 }
 
 // New creates an NTP packet in response to the incoming request time
-func New(request []byte, now time.Time) NTPPacket {
+func New(request []byte) NTPPacket {
 	original := binary.BigEndian.Uint64(request[40:])
-	epoch := Epoch(now)
+	moment := now.Moment(time.Now().UTC())
 	packet := NTPPacket{
 		LiVnMode:   0x1C, // LI:0 (no warning), VN:4 (version 4), Mode:4 (server)
 		Stratum:    1,    // Primary server
 		Poll:       4,
 		Precision:  -20,
 		RefID:      0x58495645, // Experiment "XIVE" should start with "X" for now
-		RefTime:    epoch,
+		RefTime:    moment.Offset(),
 		OrigTime:   original,
-		RcvTime:    epoch,
-		TxTime:     epoch,
+		RcvTime:    moment.Offset(),
+		TxTime:     moment.Offset(),
 		packetsize: len(request),
 	}
 	return packet

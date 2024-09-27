@@ -17,7 +17,7 @@ start: build
 
 .PHONY: test
 test: check
-	go test -v .
+	go test -v ./...
 
 .PHONY: time
 time:
