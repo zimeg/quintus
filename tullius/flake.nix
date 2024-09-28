@@ -32,7 +32,7 @@
           hostName = "tullius";
           firewall = {
             enable = true;
-            allowedTCPPorts = [ 443 ];
+            allowedTCPPorts = [ 80 ];
             allowedUDPPorts = [ 123 ];
           };
           networkmanager = {
