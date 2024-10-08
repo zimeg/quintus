@@ -16,7 +16,8 @@ Future moments can be realized on request with a started `go` server:
 ```sh
 $ make start
 ...
-2024/09/22 23:10:34 UDP server listening for NTP requests on port :123
+2024/10/08 17:41:20 UDP server listening for NTP requests on port :123
+2024/10/08 17:41:20 TCP server handling the HTTP requests on port :80
 ```
 
 ### Asking for the time
@@ -26,7 +27,7 @@ A request for the current moment can be made with the `sntp` command:
 ```sh
 $ sntp localhost
 ...
-2024-09-22 23:10:52.344264 (+0700) +345599.656148 +/- 230399.770780 localhost ::1 s1 no-leap
+2024-10-08 17:41:24.641235 (+0400) +345599.359352 +/- 230399.572916 localhost ::1 s1 no-leap
 ```
 
 [rfc]: https://datatracker.ietf.org/doc/html/rfc5905
