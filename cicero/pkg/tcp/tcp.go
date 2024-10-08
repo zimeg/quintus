@@ -13,7 +13,7 @@ import (
 func Listen() {
 	var port string
 	if v, ok := os.LookupEnv("HTTP_PORT"); !ok {
-		port = ":443"
+		port = ":80"
 	} else {
 		port = fmt.Sprintf(":%s", v)
 	}
