@@ -31,14 +31,12 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@v13
       - name: Restore or save caches
         uses: DeterminateSystems/magic-nix-cache-action@v8
-      - name: Setup tofu tooling
-        uses: opentofu/setup-opentofu@v1
       - name: Prepare for structure
         run: nix run .#tofu -- init
       - name: Ensure sensible setup
         run: |
-          tofu fmt -check
-          tofu validate
+          nix run .#tofu -- fmt -check
+          nix run .#tofu -- validate
       - name: Plan the upcoming change
         if: github.event_name == 'pull_request'
         run: nix run .#tofu -- plan
