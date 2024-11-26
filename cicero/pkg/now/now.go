@@ -17,7 +17,7 @@ type Now struct {
 
 // Moment realizes the provided utc time in the standard quintus format
 func Moment(utc time.Time) Now {
-	return Now{
+	now := Now{
 		year:   utc.Year(),
 		month:  utc.YearDay() / 30,
 		date:   utc.YearDay() % 30,
@@ -25,6 +25,14 @@ func Moment(utc time.Time) Now {
 		minute: utc.Minute(),
 		second: utc.Second(),
 	}
+	switch now.month {
+	case 12:
+		now.month = 0
+		now.year += 1
+	default:
+		now.month += 1
+	}
+	return now
 }
 
 // Epoch represents the number of seconds since the Unix epoch for the current
@@ -34,17 +42,17 @@ func Moment(utc time.Time) Now {
 // Dates that the Gregorian calendar cannot show are waited for on the previous
 // date until the next possible date arrives
 func (n *Now) Epoch() uint64 {
-	var month time.Month
-	var date int
-	if n.month != 12 {
-		month = time.Month(n.month + 1)
-		date = n.date
-	} else {
+	year := n.year
+	month := time.Month(n.month)
+	date := n.date
+	switch n.month {
+	case 0:
+		year = n.year - 1
 		month = time.Month(12)
 		date = 31
 	}
 	conversion := time.Date(
-		n.year,
+		year,
 		month,
 		date,
 		n.hour,
@@ -70,7 +78,7 @@ func (n Now) ToString() string {
 	return fmt.Sprintf(
 		"%d-%02d-%02dT%02d:%02d:%02dZ",
 		n.year,
-		n.month+1,
+		n.month,
 		n.date,
 		n.hour,
 		n.minute,

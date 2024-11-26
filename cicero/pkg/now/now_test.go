@@ -23,14 +23,24 @@ func TestMoment(t *testing.T) {
 			expected: "1970-02-01T00:00:00Z",
 			epoch:    time.Date(1970, 2, 1, 0, 0, 0, 0, time.UTC).Unix(),
 		},
+		"append the trailing nil period to the beginning of the year": {
+			now:      time.Date(1999, 12, 27, 0, 0, 0, 0, time.UTC),
+			expected: "2000-00-01T00:00:00Z",
+			epoch:    time.Date(1999, 12, 31, 0, 0, 0, 0, time.UTC).Unix(),
+		},
+		"wait to start the next year with a nil period for resetting": {
+			now:      time.Date(1999, 12, 31, 23, 59, 59, 99, time.UTC),
+			expected: "2000-00-05T23:59:59Z",
+			epoch:    time.Date(1999, 12, 31, 23, 59, 59, 99, time.UTC).Unix(),
+		},
 		"capture additions of a leap year increasing counting offsets": {
 			now:      time.Date(2000, 12, 31, 23, 59, 59, 99, time.UTC),
-			expected: "2000-13-06T23:59:59Z",
+			expected: "2001-00-06T23:59:59Z",
 			epoch:    time.Date(2000, 12, 31, 23, 59, 59, 99, time.UTC).Unix(),
 		},
 		"confirm that leap years are counted using the correct offset": {
 			now:      time.Date(2100, 12, 31, 23, 59, 59, 99, time.UTC),
-			expected: "2100-13-05T23:59:59Z",
+			expected: "2101-00-05T23:59:59Z",
 			epoch:    time.Date(2100, 12, 31, 23, 59, 59, 99, time.UTC).Unix(),
 		},
 		"find impossible dates repeat the date before if this happens": {

@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix!: start the new year during nil period but align month january 2024-11-30
 - fix: open the http port for web access without using a certificate 2024-10-12
 - feat: write the current time and comparison to a webpage on domain 2024-09-28
 - fix!: follow the quintus calendar when handling the time protocols 2024-09-26
