@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix!: keep a matching leap year when converting the current moment 2024-12-02
 - fix!: start the new year during nil period but align month january 2024-11-30
 - fix: open the http port for web access without using a certificate 2024-10-12
 - feat: write the current time and comparison to a webpage on domain 2024-09-28
