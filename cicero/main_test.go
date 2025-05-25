@@ -29,6 +29,6 @@ func TestCicero(t *testing.T) {
 	response, err := ntpclient.Time("localhost:12321")
 	require.NoError(t, err)
 	wait := now.Sub(response)
-	assert.Greater(t, int64(0), wait.Milliseconds())
-	assert.LessOrEqual(t, wait.Milliseconds()%10000, int64(1200))
+	assert.Greater(t, wait.Milliseconds(), int64(0))
+	assert.LessOrEqual(t, wait.Milliseconds(), int64(1200))
 }
