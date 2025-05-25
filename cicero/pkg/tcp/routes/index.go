@@ -14,7 +14,7 @@ import (
 func Index(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprintf(w, "%d-04-04T03:55:05Z", time.Now().Year())
+		fmt.Fprintf(w, "%d-04-04T03:55:05Z", now.Moment(time.Now().UTC()).Year())
 		return
 	}
 	tpl := `
