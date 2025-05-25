@@ -97,3 +97,8 @@ func (n Now) ToString() string {
 		n.second,
 	)
 }
+
+// Year returns the year
+func (n Now) Year() int {
+	return n.year
+}
