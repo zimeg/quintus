@@ -102,3 +102,13 @@ func (n Now) ToString() string {
 func (n Now) Year() int {
 	return n.year
 }
+
+// Month returns the month
+func (n Now) Month() int {
+	return n.month
+}
+
+// Date returns the date
+func (n Now) Date() int {
+	return n.date
+}

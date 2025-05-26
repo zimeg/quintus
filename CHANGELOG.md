@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: print quintus dates in a calendar matching related gregorian 2025-05-26
 - fix!: keep a matching leap year when converting the current moment 2024-12-02
 - fix!: start the new year during nil period but align month january 2024-11-30
 - fix: open the http port for web access without using a certificate 2024-10-12
