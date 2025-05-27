@@ -14,11 +14,25 @@
       each =
         function:
         nixpkgs.lib.genAttrs [
-          "x86_64-darwin"
-          "x86_64-linux"
           "aarch64-darwin"
           "aarch64-linux"
+          "x86_64-darwin"
+          "x86_64-linux"
         ] (system: function nixpkgs.legacyPackages.${system});
+      cicero = each (
+        pkgs:
+        pkgs.buildGoModule {
+          pname = "cicero";
+          version = "now";
+          src = ./cicero;
+          ldflags = [
+            "-s"
+            "-w"
+          ];
+          doCheck = true;
+          vendorHash = "sha256-yXXLs0NV7jQhRMCyWy8wbYQGRJXv8RLHFIYZI1EryWM=";
+        }
+      );
     in
     {
       devShells = each (pkgs: {
@@ -39,23 +53,16 @@
           '';
         };
       });
-      packages.x86_64-linux = {
+      packages."aarch64-darwin".default = cicero."aarch64-darwin";
+      packages."aarch64-linux".default = cicero."aarch64-linux";
+      packages."x86_64-darwin".default = cicero."x86_64-darwin";
+      packages."x86_64-linux" = {
+        default = cicero."x86_64-linux";
         tullius =
           let
             system = "x86_64-linux";
             pkgs = import nixpkgs {
               inherit system;
-            };
-            cicero = pkgs.buildGoModule {
-              pname = "cicero";
-              version = "now";
-              src = ./cicero;
-              ldflags = [
-                "-s"
-                "-w"
-              ];
-              doCheck = true;
-              vendorHash = "sha256-yXXLs0NV7jQhRMCyWy8wbYQGRJXv8RLHFIYZI1EryWM=";
             };
             configurations = {
               system.stateVersion = "24.05";
@@ -78,7 +85,7 @@
                 wantedBy = [ "multi-user.target" ];
                 after = [ "network.target" ];
                 script = ''
-                  ${cicero}/bin/cicero
+                  ${cicero.${system}}/bin/cicero
                 '';
                 serviceConfig = {
                   Restart = "always";
