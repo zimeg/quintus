@@ -40,8 +40,8 @@ jobs:
           nix run .#tullius.tofu -- fmt -check
           nix run .#tullius.tofu -- validate
       - name: Plan the upcoming change
-        if: github.event_name == 'pull_request'
+        if: github.ref != 'refs/heads/main'
         run: nix run .#tullius.tofu -- plan
       - name: Actually apply the change
-        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+        if: github.ref == 'refs/heads/main'
         run: nix run .#tullius.tofu -- apply -auto-approve
