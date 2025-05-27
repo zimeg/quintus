@@ -1,0 +1,5 @@
+# Development leftovers
+.direnv
+
+# Build outputs
+result

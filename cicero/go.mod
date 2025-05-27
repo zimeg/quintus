@@ -1,6 +1,6 @@
 module github.com/zimeg/quintus/cicero
 
-go 1.22.7
+go 1.24.3
 
 require (
 	github.com/beevik/ntp v1.4.3

@@ -12,6 +12,8 @@ jobs:
   infrastruct:
     name: Infrastructural adaptations
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     defaults:
       run:
         working-directory: tullius
@@ -20,26 +22,26 @@ jobs:
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     steps:
       - name: Checkout this repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
       - name: Configure aws credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: aws-actions/configure-aws-credentials@e3dd6a429d7300a6a4c196c26e071d42e0343502 # v4.0.2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
       - name: Install a flaked Nix
-        uses: DeterminateSystems/nix-installer-action@v13
-      - name: Restore or save caches
-        uses: DeterminateSystems/magic-nix-cache-action@v8
+        uses: DeterminateSystems/nix-installer-action@21a544727d0c62386e78b4befe52d19ad12692e3 # v17
       - name: Prepare for structure
-        run: nix run .#tofu -- init
+        run: nix run .#tullius.tofu -- init
       - name: Ensure sensible setup
         run: |
-          nix run .#tofu -- fmt -check
-          nix run .#tofu -- validate
+          nix run .#tullius.tofu -- fmt -check
+          nix run .#tullius.tofu -- validate
       - name: Plan the upcoming change
-        if: github.event_name == 'pull_request'
-        run: nix run .#tofu -- plan
+        if: github.ref != 'refs/heads/main'
+        run: nix run .#tullius.tofu -- plan
       - name: Actually apply the change
-        if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
-        run: nix run .#tofu -- apply -auto-approve
+        if: github.ref == 'refs/heads/main'
+        run: nix run .#tullius.tofu -- apply -auto-approve
