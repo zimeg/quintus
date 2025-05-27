@@ -42,7 +42,11 @@
       packages.x86_64-linux = {
         tullius =
           let
-            cicero = nixpkgs.legacyPackages."x86_64-linux".buildGoModule {
+            system = "x86_64-linux";
+            pkgs = import nixpkgs {
+              inherit system;
+            };
+            cicero = pkgs.buildGoModule {
               pname = "cicero";
               version = "now";
               src = ./cicero;
@@ -55,6 +59,9 @@
             };
             configurations = {
               system.stateVersion = "24.05";
+              nix.registry = {
+                nixpkgs.flake = nixpkgs;
+              };
               networking = {
                 hostName = "tullius";
                 firewall = {
@@ -81,16 +88,19 @@
               time = {
                 timeZone = "Etc/UTC";
               };
+              virtualisation = {
+                diskSize = 4 * 1024;
+              };
             };
-            name = "cicero-x86_64-linux";
+            name = "cicero-${system}";
             image = inputs.nixos-generators.nixosGenerate {
+              inherit pkgs;
               format = "amazon";
               modules = [
                 configurations
                 {
                   amazonImage = {
                     inherit name;
-                    sizeMB = 4 * 1024;
                   };
                 }
               ];
@@ -99,9 +109,9 @@
           in
           {
             inherit cicero;
-            tofu = nixpkgs.legacyPackages."x86_64-linux".writeShellScriptBin "tofu" ''
+            tofu = pkgs.writeShellScriptBin "tofu" ''
               export TF_VAR_image="${virtualization}"
-              ${nixpkgs.legacyPackages."x86_64-linux".opentofu}/bin/tofu $@
+              ${pkgs.opentofu}/bin/tofu $@
             '';
           };
       };
