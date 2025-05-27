@@ -50,7 +50,7 @@
                 "-s"
                 "-w"
               ];
-              doCheck = false;
+              doCheck = true;
               vendorHash = "sha256-yXXLs0NV7jQhRMCyWy8wbYQGRJXv8RLHFIYZI1EryWM=";
             };
             configurations = {
