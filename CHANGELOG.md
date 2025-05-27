@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- build: package dependencies before tullius setups as configuration 2025-05-26
 - feat: print quintus dates in a calendar matching related gregorian 2025-05-26
 - fix!: keep a matching leap year when converting the current moment 2024-12-02
 - fix!: start the new year during nil period but align month january 2024-11-30
