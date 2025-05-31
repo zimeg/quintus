@@ -7,6 +7,7 @@ import (
 	ntpclient "github.com/beevik/ntp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"github.com/zimeg/quintus/cicero/pkg/now"
 	"github.com/zimeg/quintus/cicero/pkg/udp"
 )
 
@@ -25,10 +26,9 @@ func TestCicero(t *testing.T) {
 		require.NoError(t, err)
 		respond(conn, addr, buff)
 	}()
-	now := time.Now()
 	response, err := ntpclient.Time("localhost:12321")
 	require.NoError(t, err)
-	wait := now.Sub(response)
-	assert.Greater(t, wait.Milliseconds(), int64(0))
-	assert.LessOrEqual(t, wait.Milliseconds(), int64(1200))
+	wait := now.Moment(time.Now().UTC()).Epoch() - uint64(response.Unix())
+	assert.GreaterOrEqual(t, wait, uint64(0))
+	assert.LessOrEqual(t, wait, uint64(1200))
 }
