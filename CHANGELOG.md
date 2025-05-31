@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: scroll back into the past or toward future dates in infinite 2025-06-01
 - build: package dependencies before tullius setups as configuration 2025-05-26
 - feat: print quintus dates in a calendar matching related gregorian 2025-05-26
 - fix!: keep a matching leap year when converting the current moment 2024-12-02

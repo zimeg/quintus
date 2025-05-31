@@ -83,5 +83,37 @@ func Cal(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
 		return
 	}
-	fmt.Fprintf(w, "%s", strings.TrimSpace(cal.String()))
+	switch {
+	case year < current.Year():
+		fmt.Fprintf(w, `
+<tr id="before"></tr>
+%s
+<tr hx-get="/cal/%d"
+  hx-disable
+  hx-target="#before"
+  hx-trigger="revealed once"
+  hx-swap="outerHTML show:[id='%d-00']:top"
+>
+</tr>`,
+			strings.TrimSpace(cal.String()),
+			year-1,
+			year+1,
+		)
+	case year > current.Year():
+		fmt.Fprintf(w, `
+<tr hx-get="/cal/%d"
+  hx-disable
+  hx-target="#after"
+  hx-trigger="revealed once"
+  hx-swap="outerHTML"
+>
+%s
+<tr id="after"></tr>
+		`,
+			year+1,
+			strings.TrimSpace(cal.String()),
+		)
+	default:
+		fmt.Fprintf(w, `%s`, strings.TrimSpace(cal.String()))
+	}
 }

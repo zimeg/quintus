@@ -18,6 +18,11 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%d-04-04T03:55:05Z", current.Year())
 		return
 	}
+	funcs := template.FuncMap{
+		"add": func(i, j int) int {
+			return i + j
+		},
+	}
 	tpl := `
 <!DOCTYPE html>
 <html>
@@ -100,7 +105,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				<span title="Quintus Time Server">QTS</span>
 				......
 				<time id="quintus" hx-get="/now" hx-trigger="every 1s">
-					{{.Time}}
+					{{.Time.ToString}}
 				</time>
 			</p>
 			<p>
@@ -113,18 +118,59 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		</header>
 		<main>
 			<table>
-				<tbody>{{.Cal}}</tbody>
+				<tbody>
+					<tr id="before"></tr>
+					{{ .Prev }}
+					<tr hx-get="/cal/{{ add .Time.Year -2 }}"
+						hx-target="#before"
+						hx-trigger="revealed once"
+						hx-swap="outerHTML show:[id='{{ .Time.Year }}-00']:top"
+					>
+					</tr>
+					{{ .Curr }}
+					<tr hx-get="/cal/{{ add .Time.Year 2 }}"
+						hx-target="#after"
+						hx-trigger="revealed once"
+						hx-swap="outerHTML"
+					>
+					</tr>
+					{{ .Next }}
+					<tr id="after"></tr>
+				</tbody>
 		  	</table>
 		</main>
         <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+		<script>
+		htmx.on('htmx:afterSwap', (e) => {
+			setTimeout(() => {
+				document.querySelectorAll("tr[hx-disable]").forEach((el) => el.removeAttribute("hx-disable"));
+				htmx.process(document.body);
+			}, 120);
+		});
+		if (!location.hash) {
+			document.getElementById("{{ .Time.Year }}-00").scrollIntoView();
+		}
+		</script>
     </body>
 </html>`
-	t, err := template.New("index").Parse(tpl)
+	t, err := template.New("index").Funcs(funcs).Parse(tpl)
 	if err != nil {
 		fmt.Fprintf(w, "%s", current.ToString())
 		return
 	}
-	cal, err := calendar(current.Year())
+	prev, err := calendar(current.Year() - 1)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
+		return
+	}
+	curr, err := calendar(current.Year())
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
+		return
+	}
+	next, err := calendar(current.Year() + 1)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
@@ -132,12 +178,16 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}
 	data := struct {
 		UTC  string
-		Time string
-		Cal  template.HTML
+		Time now.Now
+		Prev template.HTML
+		Curr template.HTML
+		Next template.HTML
 	}{
-		Cal:  template.HTML(cal.String()),
 		UTC:  utc.ToString(),
-		Time: current.ToString(),
+		Time: current,
+		Prev: template.HTML(prev.String()),
+		Curr: template.HTML(curr.String()),
+		Next: template.HTML(next.String()),
 	}
 	err = t.Execute(w, data)
 	if err != nil {
