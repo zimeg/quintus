@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- chore: update the license year at the turn of the quintus calendar 2025-06-01
 - feat: scroll back into the past or toward future dates in infinite 2025-06-01
 - test: compare the returned quintus epoch from current moments time 2025-06-01
 - build: package dependencies before tullius setups as configuration 2025-05-26
