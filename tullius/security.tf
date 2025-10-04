@@ -1,9 +1,9 @@
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/security_group
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/security_group
 resource "aws_security_group" "hourglass" {
   name = "qt.hourglass"
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/vpc_security_group_egress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_egress_rule
 resource "aws_vpc_security_group_egress_rule" "outbound" {
   security_group_id = aws_security_group.hourglass.id
 
@@ -11,7 +11,7 @@ resource "aws_vpc_security_group_egress_rule" "outbound" {
   ip_protocol = "-1"
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/vpc_security_group_ingress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
 resource "aws_vpc_security_group_ingress_rule" "http" {
   security_group_id = aws_security_group.hourglass.id
 
@@ -21,7 +21,7 @@ resource "aws_vpc_security_group_ingress_rule" "http" {
   to_port     = 80
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/vpc_security_group_ingress_rule
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/vpc_security_group_ingress_rule
 resource "aws_vpc_security_group_ingress_rule" "ntp" {
   security_group_id = aws_security_group.hourglass.id
 

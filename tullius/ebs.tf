@@ -1,4 +1,4 @@
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/ebs_snapshot_import
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/ebs_snapshot_import
 resource "aws_ebs_snapshot_import" "cicero" {
   role_name = aws_iam_role.vm.id
 

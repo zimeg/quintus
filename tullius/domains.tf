@@ -1,9 +1,9 @@
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/route53_zone
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/route53_zone
 resource "aws_route53_zone" "timekeeper" {
   name = var.domain
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/route53_record
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/route53_record
 resource "aws_route53_record" "servius" {
   name    = var.domain
   type    = "A"
