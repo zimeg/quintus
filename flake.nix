@@ -107,8 +107,8 @@
                 modules = [
                   configurations
                   {
-                    amazonImage = {
-                      inherit name;
+                    image = {
+                      baseName = name;
                     };
                   }
                 ];
