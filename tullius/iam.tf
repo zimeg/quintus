@@ -1,10 +1,10 @@
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/iam_role_policy_attachment
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment
 resource "aws_iam_role_policy_attachment" "vm" {
   role       = aws_iam_role.vm.id
   policy_arn = aws_iam_policy.vm.arn
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/iam_role
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role
 resource "aws_iam_role" "vm" {
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -23,7 +23,7 @@ resource "aws_iam_role" "vm" {
   })
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/iam_role_policy
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/iam_role_policy
 resource "aws_iam_policy" "vm" {
   policy = jsonencode({
     Version = "2012-10-17"

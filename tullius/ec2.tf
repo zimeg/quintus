@@ -1,4 +1,4 @@
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/ami
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/ami
 resource "aws_ami" "cicero" {
   name                = "ciceroami"
   virtualization_type = "hvm"
@@ -11,7 +11,7 @@ resource "aws_ami" "cicero" {
   }
 }
 
-# https://search.opentofu.org/provider/opentofu/aws/latest/docs/resources/instance
+# https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/instance
 resource "aws_instance" "clock" {
   ami                    = aws_ami.cicero.id
   instance_type          = "t3.nano"

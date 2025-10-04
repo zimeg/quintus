@@ -1,7 +1,7 @@
 # This file is maintained automatically by "tofu init".
 # Manual edits may be lost in future updates.
 
-provider "registry.opentofu.org/opentofu/aws" {
+provider "registry.opentofu.org/hashicorp/aws" {
   version     = "5.66.0"
   constraints = "5.66.0"
   hashes = [

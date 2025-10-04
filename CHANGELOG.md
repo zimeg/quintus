@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- build: replace additional providers from infrastructure registries 2025-10-07
 - chore: update the license year at the turn of the quintus calendar 2025-06-01
 - feat: scroll back into the past or toward future dates in infinite 2025-06-01
 - test: compare the returned quintus epoch from current moments time 2025-06-01
