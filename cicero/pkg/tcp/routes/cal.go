@@ -58,7 +58,7 @@ func calendar(year int) (w bytes.Buffer, err error) {
 	if err != nil {
 		return bytes.Buffer{}, err
 	}
-	return
+	return w, nil
 }
 
 // Cal responds to requests with a table

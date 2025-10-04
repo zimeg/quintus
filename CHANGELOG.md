@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- build: update dependencies to most recent released version changes 2025-10-07
 - build: replace additional providers from infrastructure registries 2025-10-07
 - chore: update the license year at the turn of the quintus calendar 2025-06-01
 - feat: scroll back into the past or toward future dates in infinite 2025-06-01
