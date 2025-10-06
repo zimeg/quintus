@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: serve web pages over the secure connection using certificate 2025-10-08
 - build: update dependencies to most recent released version changes 2025-10-07
 - build: replace additional providers from infrastructure registries 2025-10-07
 - chore: update the license year at the turn of the quintus calendar 2025-06-01
