@@ -74,17 +74,43 @@
                   hostName = "tullius";
                   firewall = {
                     enable = true;
-                    allowedTCPPorts = [ 80 ];
+                    allowedTCPPorts = [
+                      80
+                      443
+                    ];
                     allowedUDPPorts = [ 123 ];
                   };
                   networkmanager = {
                     enable = true;
                   };
                 };
+                security.acme = {
+                  acceptTerms = true;
+                  certs = {
+                    "quintus.sh" = {
+                      email = "calendar@quintus.sh";
+                      group = "nginx";
+                    };
+                  };
+                };
+                services.nginx = {
+                  enable = true;
+                  virtualHosts."quintus.sh" = {
+                    enableACME = true;
+                    forceSSL = true;
+                    locations."/" = {
+                      proxyPass = "http://127.0.0.1:5000";
+                      proxyWebsockets = true;
+                    };
+                  };
+                };
                 systemd.services.cicero = {
                   enable = true;
                   wantedBy = [ "multi-user.target" ];
-                  after = [ "network.target" ];
+                  after = [
+                    "acme-quintus.sh.service"
+                    "network.target"
+                  ];
                   script = ''
                     ${cicero.${system}}/bin/cicero
                   '';
@@ -95,6 +121,9 @@
                 };
                 time = {
                   timeZone = "Etc/UTC";
+                };
+                users = {
+                  users.nginx.extraGroups = [ "acme" ];
                 };
                 virtualisation = {
                   diskSize = 4 * 1024;
