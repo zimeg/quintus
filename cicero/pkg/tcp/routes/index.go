@@ -30,61 +30,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
         <title>Quintus calendar</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://cdn.tailwindcss.com"></script>
-        <style type="text/tailwindcss">
-        @layer base {
-            a {
-                @apply underline;
-            }
-            body > * {
-                @apply font-mono;
-				@apply max-w-lg;
-				@apply mx-auto;
-            }
-            h1 {
-                @apply pt-3;
-				@apply text-2xl;
-            }
-			header {
-				@apply bg-white;
-				@apply border-b;
-				@apply h-36;
-				@apply left-0;
-				@apply p-2;
-				@apply sticky;
-				@apply top-0;
-				@apply w-full;
-				@apply lg:fixed;
-				@apply lg:h-full;
-				@apply lg:w-96;
-			}
-			main {
-				@apply lg:ml-96;
-			}
-			table {
-				@apply table-fixed;
-				@apply w-full;
-			}
-			td {
-				@apply cursor-default;
-				@apply text-right;
-			}
-			th {
-				@apply cursor-pointer;
-				@apply font-semibold;
-				@apply scroll-mt-36;
-				@apply text-right;
-				@apply lg:scroll-mt-0;
-			}
-			time {
-				@apply text-nowrap;
-			}
-            nav {
-                @apply pb-2;
-				@apply text-sm;
-            }
-        }
-        </style>
+        <link href="./css/output.css" rel="stylesheet">
     </head>
     <body>
 		<header>

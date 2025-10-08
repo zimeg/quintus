@@ -1,5 +1,6 @@
 .PHONY: build
 build:
+	tailwindcss -i ./pkg/tcp/routes/css/input.css -o ./pkg/tcp/routes/css/output.css
 	go build -o cicero
 
 .PHONY: check
@@ -16,8 +17,11 @@ start: build
 	HTTP_PORT=8080 ./cicero
 
 .PHONY: test
-test: check
+test: check build
 	go test -v ./...
+	find ./pkg/tcp/routes/css/output.css
+	git diff -- ./pkg/tcp/routes/css/output.css
+	git diff --quiet -- ./pkg/tcp/routes/css/output.css
 
 .PHONY: time
 time:

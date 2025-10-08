@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- build: package compiled css for faster serving on the known domain 2025-10-10
 - feat: serve web pages over the secure connection using certificate 2025-10-08
 - build: update dependencies to most recent released version changes 2025-10-07
 - build: replace additional providers from infrastructure registries 2025-10-07

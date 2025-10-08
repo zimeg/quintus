@@ -1,0 +1,52 @@
+@import "tailwindcss";
+@layer base {
+  a {
+    @apply underline;
+  }
+  body > * {
+    @apply font-mono;
+    @apply max-w-lg;
+    @apply mx-auto;
+  }
+  h1 {
+    @apply pt-3 text-2xl;
+  }
+  header {
+    @apply bg-white;
+    @apply border-b;
+    @apply h-36;
+    @apply left-0;
+    @apply p-2;
+    @apply sticky;
+    @apply top-0;
+    @apply w-full;
+    @apply lg:fixed;
+    @apply lg:h-full;
+    @apply lg:w-96;
+  }
+  main {
+    @apply lg:ml-96;
+  }
+  nav {
+    @apply pb-2;
+    @apply text-sm;
+  }
+  table {
+    @apply table-fixed;
+    @apply w-full;
+  }
+  td {
+    @apply cursor-default;
+    @apply text-right;
+  }
+  th {
+    @apply cursor-pointer;
+    @apply font-semibold;
+    @apply scroll-mt-36;
+    @apply text-right;
+    @apply lg:scroll-mt-0;
+  }
+  time {
+    @apply text-nowrap;
+  }
+}
