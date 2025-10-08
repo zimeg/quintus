@@ -1,5 +1,6 @@
 # Development leftovers
 .direnv
+coverage.txt
 
 # Build outputs
 result

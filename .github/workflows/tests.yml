@@ -30,7 +30,7 @@ jobs:
       - name: Build binary
         run: nix develop -c make build
       - name: Run tests
-        run: nix develop -c go test -v ./... -coverprofile=coverage.txt
+        run: nix develop -c make test
       - name: Upload coverage results
         uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
         with:
