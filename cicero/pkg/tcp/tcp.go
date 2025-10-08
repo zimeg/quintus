@@ -20,6 +20,7 @@ func Listen() {
 	log.Printf("TCP server handling the HTTP requests on port %s", port)
 	http.HandleFunc("/", routes.Index)
 	http.HandleFunc("/cal/{year...}", routes.Cal)
+	http.HandleFunc("/css/output.css", routes.CSS)
 	http.HandleFunc("/now", routes.Now)
 	http.HandleFunc("/utc", routes.UTC)
 	log.Fatal(http.ListenAndServe(port, nil))
