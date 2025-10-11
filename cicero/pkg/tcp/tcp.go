@@ -21,6 +21,7 @@ func Listen() {
 	http.HandleFunc("/", routes.Index)
 	http.HandleFunc("/cal/{year...}", routes.Cal)
 	http.HandleFunc("/css/output.css", routes.CSS)
+	http.HandleFunc("/date/{date}", routes.Date)
 	http.HandleFunc("/now", routes.Now)
 	http.HandleFunc("/utc", routes.UTC)
 	log.Fatal(http.ListenAndServe(port, nil))

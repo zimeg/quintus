@@ -24,6 +24,12 @@
     @apply lg:h-full;
     @apply lg:w-96;
   }
+  input[type="radio"] {
+    @apply cursor-pointer;
+  }
+  label > p {
+    @apply px-4;
+  }
   main {
     @apply lg:ml-96;
   }
