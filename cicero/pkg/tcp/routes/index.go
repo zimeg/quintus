@@ -47,45 +47,49 @@ func Index(w http.ResponseWriter, r *http.Request) {
 					title="github repo"
 				>code</a>
 			</nav>
-			<p>
-				<span title="Quintus Time Server">QTS</span>
-				......
-				<time id="quintus" hx-get="/now" hx-trigger="every 1s">
-					{{.Time.ToString}}
-				</time>
-			</p>
-			<p>
-				<span title="Universal Coordinated Time">UTC</span>
-				......
-				<time id="utc" hx-get="/utc" hx-trigger="every 1s">
-					{{.UTC}}
-				</time>
-			</p>
+			<article id="timers">
+				<p>
+					<span title="Quintus Time Server">QTS</span>
+					......
+					<time id="quintus" hx-get="/now" hx-trigger="every 1s">
+						{{.Time.ToString}}
+					</time>
+				</p>
+				<p>
+					<span title="Universal Coordinated Time">UTC</span>
+					......
+					<time id="utc" hx-get="/utc" hx-trigger="every 1s">
+						{{.UTC}}
+					</time>
+				</p>
+			</article>
 		</header>
 		<main>
-			<table>
-				<tbody>
-					<tr id="before"></tr>
-					{{ .Prev }}
-					<tr hx-get="/cal/{{ add .Time.Year -2 }}"
-						hx-target="#before"
-						hx-trigger="revealed once"
-						hx-swap="outerHTML show:[id='{{ .Time.Year }}-00']:top"
-					>
-					</tr>
-					{{ .Curr }}
-					<tr hx-get="/cal/{{ add .Time.Year 2 }}"
-						hx-target="#after"
-						hx-trigger="revealed once"
-						hx-swap="outerHTML"
-					>
-					</tr>
-					{{ .Next }}
-					<tr id="after"></tr>
-				</tbody>
-		  	</table>
+			<form>
+				<table>
+					<tbody>
+						<tr id="before"></tr>
+						{{ .Prev }}
+						<tr hx-get="/cal/{{ add .Time.Year -2 }}"
+							hx-target="#before"
+							hx-trigger="revealed once"
+							hx-swap="outerHTML show:[id='{{ .Time.Year }}-00']:top"
+						>
+						</tr>
+						{{ .Curr }}
+						<tr hx-get="/cal/{{ add .Time.Year 2 }}"
+							hx-target="#after"
+							hx-trigger="revealed once"
+							hx-swap="outerHTML"
+						>
+						</tr>
+						{{ .Next }}
+						<tr id="after"></tr>
+					</tbody>
+		  		</table>
+			</form>
 		</main>
-        <script src="https://unpkg.com/htmx.org@2.0.2"></script>
+		<script src="https://unpkg.com/htmx.org@2.0.2"></script>
 		<script>
 		htmx.on('htmx:afterSwap', (e) => {
 			setTimeout(() => {
@@ -94,10 +98,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			}, 120);
 		});
 		if (!location.hash) {
-			document.getElementById("{{ .Time.Year }}-00").scrollIntoView();
+			document.getElementById("{{ .Time.Year }}-{{ .Time.Month }}").scrollIntoView();
 		}
 		</script>
-    </body>
+	</body>
 </html>`
 	t, err := template.New("index").Funcs(funcs).Parse(tpl)
 	if err != nil {

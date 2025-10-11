@@ -11,6 +11,7 @@ import (
 
 	"github.com/zimeg/quintus/cicero/pkg/cal"
 	"github.com/zimeg/quintus/cicero/pkg/now"
+	"github.com/zimeg/quintus/cicero/pkg/utc"
 )
 
 // calendar formats a table of dates to output
@@ -22,24 +23,42 @@ func calendar(year int) (w bytes.Buffer, err error) {
 		"mod": func(i, j int) int {
 			return i % j
 		},
+		"today": func(date now.Now) bool {
+			current := now.Moment(utc.Now())
+			return date.Year() == current.Year() &&
+				date.Month() == current.Month() &&
+				date.Date() == current.Date()
+		},
 	}
 	tpl := `
 {{- range $offset, $month := .Cal.Months -}}
 {{- $d := index $month 0 -}}
 {{- $id := printf "%d-%02d" $d.Quintus.Year $d.Quintus.Month }}
 <tr>
-  <th id="{{ $id }}" colspan="6">
-    <a href="#{{ $id }}">{{ $id }}</a>
-  </th>
+    <th id="{{ $id }}" colspan="6">
+        <a href="#{{ $id }}">{{ $id }}</a>
+    </th>
 </tr>
 <tr>
-  {{- range $num, $dates := $month }}
-  <td title="{{ format $dates.Gregorian }}">{{ $dates.Quintus.Date }}</td>
+    {{- range $num, $dates := $month }}
+    <td title="{{ format $dates.Gregorian }}">
+        <label>
+        <p>
+            <input type="radio"
+            {{ if (today $dates.Quintus) }}checked{{ end }}
+                name="date"
+                hx-get="/date/{{ format $dates.Gregorian }}"
+                hx-target="#timers"
+                hx-swap="outerHTML">
+            {{ if (lt $dates.Quintus.Date 10) }}&nbsp;{{ end }}{{ $dates.Quintus.Date }}
+        </p>
+        </label>
+    </td>
     {{- if and (ne $dates.Quintus.Month 0) (eq (mod $dates.Quintus.Date 5) 0) (ne $dates.Quintus.Date 30) }}
 </tr>
 <tr>
     {{- end }}
-  {{- end }}
+    {{- end }}
 </tr>
 {{- end}}`
 	t, err := template.New("cal").Funcs(funcs).Parse(tpl)
