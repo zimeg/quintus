@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix: inline radio buttons on mobile devices for a dense conversion 2025-10-16
 - feat: convert dates with a checkbox selection upon quintus moments 2025-10-14
 - build: package compiled css for faster serving on the known domain 2025-10-10
 - feat: serve web pages over the secure connection using certificate 2025-10-08

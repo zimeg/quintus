@@ -28,7 +28,7 @@
     @apply cursor-pointer;
   }
   label > p {
-    @apply px-4;
+    @apply sm:px-4;
   }
   main {
     @apply lg:ml-96;
