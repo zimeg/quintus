@@ -214,7 +214,10 @@
     cursor: pointer;
   }
   label > p {
-    padding-inline: calc(var(--spacing) * 4);
+    padding-inline: calc(var(--spacing) * 1);
+    @media (width >= 40rem) {
+      padding-inline: calc(var(--spacing) * 4);
+    }
   }
   main {
     @media (width >= 64rem) {
