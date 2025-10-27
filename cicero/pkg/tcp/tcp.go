@@ -23,6 +23,7 @@ func Listen() {
 	http.HandleFunc("/css/output.css", routes.CSS)
 	http.HandleFunc("/date/{date}", routes.Date)
 	http.HandleFunc("/now", routes.Now)
+	http.HandleFunc("/timezone", routes.Timezone)
 	http.HandleFunc("/utc", routes.UTC)
 	log.Fatal(http.ListenAndServe(port, nil))
 }

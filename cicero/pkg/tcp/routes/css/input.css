@@ -3,6 +3,9 @@
   a {
     @apply underline;
   }
+  article {
+    @apply cursor-pointer;
+  }
   body > * {
     @apply font-mono;
     @apply max-w-lg;
@@ -29,9 +32,6 @@
   }
   label > p {
     @apply sm:px-4;
-  }
-  main {
-    @apply lg:ml-96;
   }
   nav {
     @apply pb-2;

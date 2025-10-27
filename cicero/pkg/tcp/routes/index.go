@@ -1,3 +1,7 @@
+// Package routes has controllers for paths matching website pages with routers
+// being defined elsewhere.
+//
+// https://quintus.sh
 package routes
 
 import (
@@ -12,7 +16,16 @@ import (
 
 // Index acts as a landing page for the curious navigator
 func Index(w http.ResponseWriter, r *http.Request) {
-	current := now.Moment(time.Now().UTC())
+	cookie, _ := r.Cookie("timezone")
+	timezone := "Etc/UTC"
+	if cookie != nil {
+		timezone = cookie.Value
+	}
+	location, err := time.LoadLocation(timezone)
+	if err != nil {
+		location = time.UTC
+	}
+	current := now.Moment(time.Now().In(location))
 	if r.URL.Path != "/" {
 		w.WriteHeader(http.StatusNotFound)
 		fmt.Fprintf(w, "%d-04-04T03:55:05Z", current.Year())
@@ -26,46 +39,63 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	tpl := `
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Quintus calendar</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="./css/output.css" rel="stylesheet">
-    </head>
-    <body>
-		<header>
-			<h1>Quintus calendar</h1>
-			<nav>
-				<a
-					href="https://o526.net/blog/post/five-day-week"
-					target="_blank"
-					title="the five day week"
-				>post</a>
-				<a
-					href="https://github.com/zimeg/quintus"
-					target="_blank"
-					title="github repo"
-				>code</a>
-			</nav>
-			<article id="timers">
-				<p>
-					<span title="Quintus Time Server">QTS</span>
-					......
-					<time id="quintus" hx-get="/now" hx-trigger="every 1s">
-						{{.Time.ToString}}
-					</time>
-				</p>
-				<p>
-					<span title="Universal Coordinated Time">UTC</span>
-					......
-					<time id="utc" hx-get="/utc" hx-trigger="every 1s">
-						{{.UTC}}
-					</time>
-				</p>
-			</article>
-		</header>
-		<main>
-			<form>
+	<head>
+		<title>Quintus calendar</title>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link href="./css/output.css" rel="stylesheet">
+	</head>
+	<body>
+		<form autocomplete="off">
+			<header>
+				<h1>Quintus calendar</h1>
+				<nav>
+					<a
+						href="https://o526.net/blog/post/five-day-week"
+						target="_blank"
+						title="the five day week"
+					>post</a>
+					<a
+						href="https://github.com/zimeg/quintus"
+						target="_blank"
+						title="github repo"
+					>code</a>
+				</nav>
+				<article
+					id="timers"
+					hx-post="/timezone"
+					hx-swap="outerHTML"
+					hx-vals="js:{timezone: Intl.DateTimeFormat().resolvedOptions().timeZone}"
+				>
+					<p>
+						<span title="Quintus Time Server">QTS</span>
+						......
+						<time
+							id="quintus"
+							hx-get="/now"
+							hx-params="none"
+							hx-swap="innerHTML"
+							hx-trigger="every 1s"
+						>
+							{{.Time.ToString}}
+						</time>
+					</p>
+					<p>
+						<span title="Universal Coordinated Time">UTC</span>
+						......
+						<time
+							id="utc"
+							hx-get="/utc"
+							hx-params="none"
+							hx-swap="innerHTML"
+							hx-trigger="every 1s"
+						>
+							{{.UTC}}
+						</time>
+					</p>
+				</article>
+			</header>
+			<main>
 				<table>
 					<tbody>
 						<tr id="before"></tr>
@@ -86,9 +116,9 @@ func Index(w http.ResponseWriter, r *http.Request) {
 						{{ .Next }}
 						<tr id="after"></tr>
 					</tbody>
-		  		</table>
-			</form>
-		</main>
+				</table>
+			</main>
+		</form>
 		<script src="https://unpkg.com/htmx.org@2.0.2"></script>
 		<script>
 		htmx.on('htmx:afterSwap', (e) => {
@@ -108,19 +138,19 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%s", current.ToString())
 		return
 	}
-	prev, err := calendar(current.Year() - 1)
+	prev, err := calendar(current.Year()-1, current)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
 		return
 	}
-	curr, err := calendar(current.Year())
+	curr, err := calendar(current.Year(), current)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
 		return
 	}
-	next, err := calendar(current.Year() + 1)
+	next, err := calendar(current.Year()+1, current)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
@@ -133,7 +163,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		Curr template.HTML
 		Next template.HTML
 	}{
-		UTC:  utc.ToString(),
+		UTC:  utc.Current().In(location).ToString(),
 		Time: current,
 		Prev: template.HTML(prev.String()),
 		Curr: template.HTML(curr.String()),

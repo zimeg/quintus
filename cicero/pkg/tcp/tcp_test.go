@@ -26,8 +26,8 @@ func TestRouteIndex(t *testing.T) {
 			path:   "/",
 			status: 200,
 			expected: []string{
-				now.Moment(utc.Now()).ToString(),
-				utc.ToString(),
+				now.Moment(utc.Current().ToTime()).ToString(),
+				utc.Current().ToString(),
 			},
 		},
 		"errors with an exit code when visiting an unknown path": {

@@ -28,7 +28,7 @@ type NTPPacket struct {
 // New creates an NTP packet in response to the incoming request time
 func New(request []byte) NTPPacket {
 	original := binary.BigEndian.Uint64(request[40:])
-	moment := now.Moment(utc.Now())
+	moment := now.Moment(utc.Current().ToTime())
 	packet := NTPPacket{
 		LiVnMode:   0x1C, // LI:0 (no warning), VN:4 (version 4), Mode:4 (server)
 		Stratum:    1,    // Primary server
