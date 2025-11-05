@@ -37,7 +37,11 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 			location = "Etc/UTC"
 		}
 	}
-	existing, err := time.LoadLocation(found.Value)
+	saved := "Etc/UTC"
+	if found != nil {
+		saved = found.Value
+	}
+	existing, err := time.LoadLocation(saved)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
