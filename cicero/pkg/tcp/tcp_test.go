@@ -45,8 +45,8 @@ func TestRouteIndex(t *testing.T) {
 			rr := httptest.NewRecorder()
 			handler := http.HandlerFunc(routes.Index)
 			handler.ServeHTTP(rr, req)
+			assert.Equal(t, tt.status, rr.Code)
 			for _, str := range tt.expected {
-				assert.Equal(t, tt.status, rr.Code)
 				assert.Contains(t, rr.Body.String(), str)
 			}
 		})
