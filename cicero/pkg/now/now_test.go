@@ -5,9 +5,12 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestMoment(t *testing.T) {
+	tz, err := time.LoadLocation("America/Phoenix")
+	require.NoError(t, err)
 	tests := map[string]struct {
 		now      time.Time
 		expected string
@@ -112,6 +115,11 @@ func TestMoment(t *testing.T) {
 			now:      time.Date(2100, 1, 1, 0, 0, 0, 0, time.UTC),
 			expected: "2100-01-01T00:00:00Z",
 			epoch:    time.Date(2100, 1, 1, 0, 0, 0, 0, time.UTC).Unix(),
+		},
+		"adjust output times to account for some timezone preference": {
+			now:      time.Date(2026, 1, 1, 0, 0, 0, 0, tz),
+			expected: "2026-01-01T00:00:00-07:00",
+			epoch:    time.Date(2026, 1, 1, 0, 0, 0, 0, tz).Unix(),
 		},
 	}
 	for name, tt := range tests {
