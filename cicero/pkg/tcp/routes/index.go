@@ -40,7 +40,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Quintus calendar</title>
+		<title>Quintus Calendars</title>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link href="./css/output.css" rel="stylesheet">
@@ -48,18 +48,23 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	<body>
 		<form autocomplete="off">
 			<header>
-				<h1>Quintus calendar</h1>
+				<h1>Quintus Calendars</h1>
 				<nav>
 					<a
 						href="https://o526.net/blog/post/five-day-week"
 						target="_blank"
 						title="the five day week"
-					>post</a>
+					>about</a>
+					<a
+						href="https://buy.stripe.com/cNiaEZ0G56p5eQFgiB9EI00"
+						target="_blank"
+						title="checkout"
+					>shop</a>
 					<a
 						href="https://github.com/zimeg/quintus"
 						target="_blank"
 						title="github repo"
-					>code</a>
+					>source</a>
 				</nav>
 				<article
 					id="timers"

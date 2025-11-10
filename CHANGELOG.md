@@ -8,7 +8,8 @@ calendar.
 
 ## Changes
 
-- feat: show a date for the timezone sent in requests to time server 2025-10-29
+- feat: show a date for the timezone sent in requests to time server 2025-11-13
+- feat: link to a checkout page for selling calendars of soon months 2025-11-12
 - fix: inline radio buttons on mobile devices for a dense conversion 2025-10-16
 - feat: convert dates with a checkbox selection upon quintus moments 2025-10-14
 - build: package compiled css for faster serving on the known domain 2025-10-10
