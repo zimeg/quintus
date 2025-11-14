@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: include metadata meant to find these pages from between site 2025-11-17
 - feat: link to a checkout page for selling calendars of soon months 2025-11-12
 - fix: inline radio buttons on mobile devices for a dense conversion 2025-10-16
 - feat: convert dates with a checkbox selection upon quintus moments 2025-10-14

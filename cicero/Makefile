@@ -1,6 +1,6 @@
 .PHONY: build
 build:
-	tailwindcss -i ./pkg/tcp/routes/css/input.css -o ./pkg/tcp/routes/css/output.css
+	tailwindcss -i ./pkg/tcp/routes/static/css/input.css -o ./pkg/tcp/routes/static/css/output.css
 	go build -o cicero
 
 .PHONY: check
@@ -19,9 +19,9 @@ start: build
 .PHONY: test
 test: check build
 	go test -v ./... -coverprofile=coverage.txt
-	find ./pkg/tcp/routes/css/output.css
-	git diff -- ./pkg/tcp/routes/css/output.css
-	git diff --quiet -- ./pkg/tcp/routes/css/output.css
+	find ./pkg/tcp/routes/static/css/output.css
+	git diff -- ./pkg/tcp/routes/static/css/output.css
+	git diff --quiet -- ./pkg/tcp/routes/static/css/output.css
 
 .PHONY: time
 time:
