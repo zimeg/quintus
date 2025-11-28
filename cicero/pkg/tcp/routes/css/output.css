@@ -183,10 +183,18 @@
   article {
     cursor: pointer;
   }
+  body {
+    @media (width >= 64rem) {
+      padding-left: calc(var(--spacing) * 96);
+    }
+  }
   body > * {
     font-family: var(--font-mono);
     max-width: var(--container-lg);
     margin-inline: auto;
+    @media (width >= 64rem) {
+      margin-inline: calc(var(--spacing) * 0);
+    }
   }
   h1 {
     padding-top: calc(var(--spacing) * 3);
