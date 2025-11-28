@@ -19,44 +19,43 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%d-04-05T03:55:05Z", moment.Year())
 		return
 	}
-	if err := r.ParseForm(); err != nil {
+	err := r.ParseForm()
+	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 		return
 	}
-	found, err := r.Cookie("timezone")
-	location := r.FormValue("timezone")
+	saved, err := r.Cookie("timezone")
 	if err != nil {
 		if err != http.ErrNoCookie {
 			w.WriteHeader(http.StatusBadRequest)
 			fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 			return
 		}
-	} else {
-		if found.Value != "Etc/UTC" {
-			location = "Etc/UTC"
-		}
 	}
-	saved := "Etc/UTC"
-	if found != nil {
-		saved = found.Value
+	from := "Etc/UTC"
+	if saved != nil {
+		from = saved.Value
 	}
-	existing, err := time.LoadLocation(saved)
+	origin, err := time.LoadLocation(from)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 		return
 	}
-	requested, err := time.LoadLocation(location)
+	to := r.FormValue("timezone")
+	if from != "Etc/UTC" {
+		to = "Etc/UTC"
+	}
+	destination, err := time.LoadLocation(to)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 		return
 	}
-	current := now.Moment(time.Now().In(requested))
 	cookie := &http.Cookie{
 		Name:     "timezone",
-		Value:    location,
+		Value:    to,
 		Path:     "/",
 		MaxAge:   60 * 60 * 24 * 30,
 		SameSite: http.SameSiteStrictMode,
@@ -65,24 +64,28 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 	}
 	http.SetCookie(w, cookie)
 	date := r.FormValue("date")
-	before, err := time.Parse("2006-01-02", date)
+	dated, err := time.Parse("2006-01-02", date)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "%d-04-00T03:55:05Z", current.Year())
+		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 		return
 	}
-	clock := time.Now().In(existing)
-	previous, err := time.ParseInLocation("2006-01-02", date, existing)
+	departure, err := time.ParseInLocation("2006-01-02", date, origin)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "%d-04-00T03:55:05Z", current.Year())
+		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 		return
 	}
-	previousa := time.Date(previous.Year(), previous.Month(), previous.Day(), clock.Hour(), clock.Minute(), clock.Second(), clock.Nanosecond(), existing)
-	gregorian := time.Now().In(requested)
-
+	arrival, err := time.ParseInLocation("2006-01-02", date, destination)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
+		return
+	}
+	outbound := time.Now().In(origin)
+	departing := time.Date(departure.Year(), departure.Month(), departure.Day(), outbound.Hour(), outbound.Minute(), outbound.Second(), outbound.Nanosecond(), origin).Equal(outbound)
 	templates := bytes.Buffer{}
-	if previousa.UTC().Equal(clock.UTC()) {
+	if departing {
 		funcs := template.FuncMap{
 			"format": func(t time.Time) string {
 				return t.Format("2006-01-02")
@@ -135,7 +138,7 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 		t, err := template.New("cal").Funcs(funcs).Parse(tpl)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintf(w, "%d-04-00T03:55:05Z", current.Year())
+			fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 			return
 		}
 		data := struct {
@@ -144,22 +147,21 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 			OldGregorian time.Time
 			OldQuintus   now.Now
 		}{
-			NewGregorian: time.Now().In(requested),
-			NewQuintus:   current,
-			OldGregorian: before,
-			OldQuintus:   now.Moment(before),
+			NewGregorian: time.Now().In(destination),
+			NewQuintus:   now.Moment(time.Now().In(destination)),
+			OldGregorian: dated,
+			OldQuintus:   now.Moment(dated),
 		}
 		err = t.Execute(&templates, data)
 		if err != nil {
 			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintf(w, "%d-04-00T03:55:05Z", current.Year())
+			fmt.Fprintf(w, "%d-04-00T03:55:05Z", moment.Year())
 			return
 		}
 	}
-
-	if (before.Year() == gregorian.Year() &&
-		before.Month() == gregorian.Month() &&
-		before.Day() == gregorian.Day()) || previousa.UTC().Equal(clock.UTC()) {
+	inbound := time.Now().In(destination)
+	arriving := time.Date(arrival.Year(), arrival.Month(), arrival.Day(), inbound.Hour(), inbound.Minute(), inbound.Second(), inbound.Nanosecond(), destination).Equal(inbound)
+	if arriving || departing {
 		fmt.Fprintf(w, `
 			<article
 				id="timers"
@@ -195,16 +197,10 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 				</p>
 			</article>
 			%s`,
-			current.ToString(),
-			utc.Current().In(requested).ToString(),
+			now.Moment(time.Now().In(destination)).ToString(),
+			utc.Current().In(destination).ToString(),
 			templates.String(),
 		)
-		return
-	}
-	static, err := time.ParseInLocation("2006-01-02", date, requested)
-	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "%d-04-00T03:55:05Z", current.Year())
 		return
 	}
 	fmt.Fprintf(w, `
@@ -230,8 +226,8 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 			</p>
 		</article>
 		%s`,
-		now.Moment(static).ToString(),
-		utc.Moment(static).ToString(),
+		now.Moment(arrival).ToString(),
+		utc.Moment(arrival).ToString(),
 		templates.String(),
 	)
 }
