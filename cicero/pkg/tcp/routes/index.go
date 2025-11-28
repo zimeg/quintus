@@ -42,8 +42,20 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	<head>
 		<title>Quintus Calendars</title>
 		<meta charset="UTF-8">
+		<meta name="description" content="The Quintus calendar is an alternative to the irregular Gregorian calendar: consistent 5 day weeks make equal 30 day months." />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180">
+		<link rel="canonical" href="https://quintus.sh/" />
+		<link rel="icon" href="/favicon.ico" sizes="any">
+		<link rel="icon" href="/favicon-32x32.png" sizes="32x32">
+		<link rel="manifest" href="/manifest.webmanifest">
 		<link href="./css/output.css" rel="stylesheet">
+		<meta property="og:title" content="Quintus Calendars" />
+		<meta property="og:description" content="The Quintus calendar is an alternative to the irregular Gregorian calendar: consistent 5 day weeks make equal 30 day months." />
+		<meta property="og:image" content="https://o526.net/blog/note/ff8bd197/calendar.png" />
+		<meta property="og:image:alt" content="A stamped marking of upcoming month with leaf" />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://quintus.sh/" />
 	</head>
 	<body>
 		<form autocomplete="off">
