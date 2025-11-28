@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix: keep the current date selected if changing timezone same date 2025-12-02
 - feat: show a date for the timezone sent in requests to time server 2025-12-01
 - feat: include metadata meant to find these pages from between site 2025-11-17
 - feat: link to a checkout page for selling calendars of soon months 2025-11-12
