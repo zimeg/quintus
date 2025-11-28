@@ -84,8 +84,10 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 	}
 	outbound := time.Now().In(origin)
 	departing := time.Date(departure.Year(), departure.Month(), departure.Day(), outbound.Hour(), outbound.Minute(), outbound.Second(), outbound.Nanosecond(), origin).Equal(outbound)
+	inbound := time.Now().In(destination)
+	arriving := time.Date(arrival.Year(), arrival.Month(), arrival.Day(), inbound.Hour(), inbound.Minute(), inbound.Second(), inbound.Nanosecond(), destination).Equal(inbound)
 	templates := bytes.Buffer{}
-	if departing {
+	if departing && !arriving {
 		funcs := template.FuncMap{
 			"format": func(t time.Time) string {
 				return t.Format("2006-01-02")
@@ -159,8 +161,6 @@ func Timezone(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	inbound := time.Now().In(destination)
-	arriving := time.Date(arrival.Year(), arrival.Month(), arrival.Day(), inbound.Hour(), inbound.Minute(), inbound.Second(), inbound.Nanosecond(), destination).Equal(inbound)
 	if arriving || departing {
 		fmt.Fprintf(w, `
 			<article
