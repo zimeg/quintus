@@ -1,3 +1,4 @@
+// Package now contains converted time information in quintus representation.
 package now
 
 import (
@@ -15,6 +16,7 @@ type Now struct {
 	hour   int
 	minute int
 	second int
+	tz     *time.Location
 }
 
 // Moment realizes the provided utc time in the standard quintus format
@@ -30,6 +32,7 @@ func Moment(utc time.Time) Now {
 		hour:   utc.Hour(),
 		minute: utc.Minute(),
 		second: utc.Second(),
+		tz:     utc.Location(),
 	}
 	switch now.month {
 	case 12:
@@ -71,7 +74,7 @@ func (n Now) Epoch() uint64 {
 		n.minute,
 		n.second,
 		0,
-		time.UTC,
+		n.tz,
 	)
 	for conversion.Month() != month {
 		conversion = conversion.Add(time.Duration(-24) * time.Hour)
@@ -87,14 +90,28 @@ func (n Now) Offset() uint64 {
 
 // ToString converts internal representations of now into written string
 func (n Now) ToString() string {
+	timezone := "Z"
+	if n.tz.String() != "UTC" &&
+		n.tz.String() != "Etc/UTC" {
+		_, sec := time.Now().In(n.tz).Zone()
+		sign := "+"
+		if sec < 0 {
+			sign = "-"
+			sec = -sec
+		}
+		h := sec / 3600
+		m := (sec % 3600) / 60
+		timezone = fmt.Sprintf("%s%02d:%02d", sign, h, m)
+	}
 	return fmt.Sprintf(
-		"%d-%02d-%02dT%02d:%02d:%02dZ",
+		"%d-%02d-%02dT%02d:%02d:%02d%s",
 		n.year,
 		n.month,
 		n.date,
 		n.hour,
 		n.minute,
 		n.second,
+		timezone,
 	)
 }
 

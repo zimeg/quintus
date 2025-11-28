@@ -3,10 +3,17 @@
   a {
     @apply underline;
   }
+  article {
+    @apply cursor-pointer;
+  }
+  body {
+    @apply lg:pl-96;
+  }
   body > * {
     @apply font-mono;
     @apply max-w-lg;
     @apply mx-auto;
+    @apply lg:mx-0;
   }
   h1 {
     @apply pt-3 text-2xl;
@@ -29,9 +36,6 @@
   }
   label > p {
     @apply sm:px-4;
-  }
-  main {
-    @apply lg:ml-96;
   }
   nav {
     @apply pb-2;

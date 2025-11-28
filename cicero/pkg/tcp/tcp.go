@@ -31,6 +31,7 @@ func Listen() {
 	http.HandleFunc("/now", routes.Now)
 	http.HandleFunc("/robots.txt", routes.StaticRobots)
 	http.HandleFunc("/sitemap.xml", routes.StaticSitemap)
+	http.HandleFunc("/timezone", routes.Timezone)
 	http.HandleFunc("/utc", routes.UTC)
 	log.Fatal(http.ListenAndServe(port, nil))
 }
