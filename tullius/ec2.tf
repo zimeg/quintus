@@ -16,4 +16,8 @@ resource "aws_instance" "clock" {
   ami                    = aws_ami.cicero.id
   instance_type          = "t3.nano"
   vpc_security_group_ids = [aws_security_group.hourglass.id]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
