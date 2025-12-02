@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: convert gregorian date to quintus in plain text upon request 2025-12-05
 - fix: keep the current date selected if changing timezone same date 2025-12-02
 - feat: show a date for the timezone sent in requests to time server 2025-12-01
 - feat: include metadata meant to find these pages from between site 2025-11-17
@@ -36,4 +37,4 @@ calendar.
 
 [calver]: https://calver.org
 [commits]: https://www.conventionalcommits.org/en/v1.0.0/
-[quintus]: https://api.o526.net/v1/calendar/today
+[quintus]: https://quintus.sh/now

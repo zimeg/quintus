@@ -3,6 +3,7 @@ package routes
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/zimeg/quintus/cicero/pkg/now"
@@ -29,6 +30,11 @@ func Date(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	quintus := now.Moment(gregorian)
+	if r.Header.Get("HX-Request") == "" {
+		date := strings.Split(quintus.ToString(), "T")[0]
+		fmt.Fprintf(w, "%s", date)
+		return
+	}
 	if quintus.Year() == current.Year() &&
 		quintus.Month() == current.Month() &&
 		quintus.Date() == current.Date() {
