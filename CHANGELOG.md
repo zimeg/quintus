@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix: permit access to a converted date from websites across origin 2025-12-06
 - build: avoid significant down time when rebuilding between changes 2025-12-06
 - feat: convert gregorian date to quintus in plain text upon request 2025-12-05
 - fix: keep the current date selected if changing timezone same date 2025-12-02

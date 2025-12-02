@@ -31,6 +31,7 @@ func Date(w http.ResponseWriter, r *http.Request) {
 	}
 	quintus := now.Moment(gregorian)
 	if r.Header.Get("HX-Request") == "" {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
 		date := strings.Split(quintus.ToString(), "T")[0]
 		fmt.Fprintf(w, "%s", date)
 		return
