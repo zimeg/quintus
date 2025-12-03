@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- chore: include starting scripts for plausible page view measurment 2025-12-07
 - build: recreate snapshot title after rebuilding the server package 2025-12-07
 - chore: count page views for purposes of measuring quintus belivers 2025-12-07
 - build: assign random but cute names to servers on the amazon farms 2025-12-06

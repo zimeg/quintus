@@ -57,6 +57,10 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://quintus.sh/" />
 		<script async src="https://plausible.io/js/pa-V5C8MVM8CutMwBhg8aipf.js"></script>
+		<script>
+			window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};
+			plausible.init()
+		</script>
 	</head>
 	<body>
 		<form autocomplete="off">
