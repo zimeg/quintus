@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- build: assign random but cute names to servers on the amazon farms 2025-12-06
 - fix: permit access to a converted date from websites across origin 2025-12-06
 - build: avoid significant down time when rebuilding between changes 2025-12-06
 - feat: convert gregorian date to quintus in plain text upon request 2025-12-05

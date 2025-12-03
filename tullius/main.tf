@@ -7,6 +7,11 @@ terraform {
       source  = "hashicorp/aws"
       version = "6.15.0"
     }
+    # https://search.opentofu.org/provider/opentofu/random/latest
+    random = {
+      source  = "opentofu/random"
+      version = "~> 3.6"
+    }
   }
 
   backend "s3" {

@@ -1,6 +1,11 @@
+# https://search.opentofu.org/provider/opentofu/random/latest/docs/resources/pet
+resource "random_pet" "cicero" {
+  length = 2
+}
+
 # https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/ami
 resource "aws_ami" "cicero" {
-  name                = "ciceroami"
+  name                = "ciceroami-${random_pet.cicero.id}"
   virtualization_type = "hvm"
   ena_support         = true
   root_device_name    = "/dev/xvda"
