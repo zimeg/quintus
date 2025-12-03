@@ -1,6 +1,9 @@
 # https://search.opentofu.org/provider/hashicorp/random/latest/docs/resources/pet
 resource "random_pet" "cicero" {
   length = 2
+  keepers = {
+    snapshot_id = aws_ebs_snapshot_import.cicero.id
+  }
 }
 
 # https://search.opentofu.org/provider/hashicorp/aws/latest/docs/resources/ami
