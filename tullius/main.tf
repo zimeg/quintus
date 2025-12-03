@@ -10,7 +10,7 @@ terraform {
     # https://search.opentofu.org/provider/opentofu/random/latest
     random = {
       source  = "opentofu/random"
-      version = "~> 3.6"
+      version = "3.7.2"
     }
   }
 
