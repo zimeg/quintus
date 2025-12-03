@@ -1,4 +1,4 @@
-# https://search.opentofu.org/provider/opentofu/random/latest/docs/resources/pet
+# https://search.opentofu.org/provider/hashicorp/random/latest/docs/resources/pet
 resource "random_pet" "cicero" {
   length = 2
 }
