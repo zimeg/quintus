@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- build: recreate snapshot title after rebuilding the server package 2025-12-07
 - chore: count page views for purposes of measuring quintus belivers 2025-12-07
 - build: assign random but cute names to servers on the amazon farms 2025-12-06
 - fix: permit access to a converted date from websites across origin 2025-12-06
