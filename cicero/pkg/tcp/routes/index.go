@@ -56,6 +56,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		<meta property="og:image:alt" content="A stamped marking of upcoming month with leaf" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="https://quintus.sh/" />
+		<script async src="https://plausible.io/js/pa-V5C8MVM8CutMwBhg8aipf.js"></script>
 	</head>
 	<body>
 		<form autocomplete="off">
