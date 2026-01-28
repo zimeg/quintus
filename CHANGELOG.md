@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix: scroll to the more single digit months with left padded zeros 2026-01-28
 - chore: include starting scripts for plausible page view measurment 2025-12-07
 - build: recreate snapshot title after rebuilding the server package 2025-12-07
 - chore: count page views for purposes of measuring quintus belivers 2025-12-07
