@@ -150,7 +150,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			}, 120);
 		});
 		if (!location.hash) {
-			document.getElementById("{{ .Time.Year }}-{{ .Time.Month }}").scrollIntoView();
+			document.getElementById("{{ .Time.Year }}-{{ printf "%02d" .Time.Month }}").scrollIntoView();
 		}
 		</script>
 	</body>
