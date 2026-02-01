@@ -26,7 +26,6 @@ jobs:
     name: Restart the service
     runs-on: self-hosted
     needs: test
-    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
     steps:
