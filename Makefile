@@ -18,7 +18,7 @@ start: build
 
 .PHONY: test
 test: check build
-	go test -v ./... -coverprofile=coverage.txt
+	go test -v ./...
 	find ./pkg/tcp/routes/static/css/output.css
 	git diff -- ./pkg/tcp/routes/static/css/output.css
 	git diff --quiet -- ./pkg/tcp/routes/static/css/output.css

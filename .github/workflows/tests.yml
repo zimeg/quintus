@@ -18,18 +18,12 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Install dependencies
-        run: nix develop -c go get
-      - name: Check formatting
-        run: nix develop -c make check
-      - name: Build binary
-        run: nix develop -c make build
-      - name: Run tests
-        run: nix develop -c make test
-      - name: Upload coverage results
-        uses: codecov/codecov-action@b9fd7d16f6d7d1b5d2bec1a2887e65ceed900238 # v4.6.0
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
+      - name: Test build
+        run: |
+          nix develop -c go get
+          nix develop -c make check
+          nix develop -c make build
+          nix develop -c make test
   release:
     name: Restart the service
     runs-on: self-hosted

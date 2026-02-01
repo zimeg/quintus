@@ -1,6 +1,5 @@
 # Development leftovers
 .direnv
-coverage.txt
 kod
 
 # Build compilations
