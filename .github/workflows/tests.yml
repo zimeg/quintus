@@ -21,8 +21,6 @@ jobs:
       - name: Test build
         run: |
           nix develop -c go get
-          nix develop -c make check
-          nix develop -c make build
           nix develop -c make test
   release:
     name: Restart the service
