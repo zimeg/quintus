@@ -37,7 +37,7 @@
       });
       packages = each (pkgs: {
         default = pkgs.buildGoModule {
-          pname = "cicero";
+          pname = "quintus";
           version = "now";
           src = ./.;
           ldflags = [
