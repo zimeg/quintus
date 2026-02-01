@@ -20,7 +20,6 @@
       devShells = each (pkgs: {
         default = pkgs.mkShell {
           packages = with pkgs; [
-            awscli2 # https://github.com/aws/aws-cli/tree/v2
             git # https://github.com/git/git
             gnumake # https://github.com/mirror/make
             go # https://github.com/golang/go
@@ -29,7 +28,6 @@
             golangci-lint # https://github.com/golangci/golangci-lint
             gopls # https://github.com/golang/tools/tree/master/gopls
             ntp # https://www.ntp.org/documentation/4.2.8-series/
-            opentofu # https://github.com/opentofu/opentofu
             tailwindcss_4 # https://github.com/tailwindlabs/tailwindcss
           ];
           shellHook = ''
