@@ -1,6 +1,8 @@
 # Development leftovers
 .direnv
 coverage.txt
+kod
 
-# Build outputs
+# Build compilations
+cicero
 result
