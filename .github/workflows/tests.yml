@@ -23,11 +23,12 @@ jobs:
           nix develop -c go get
           nix develop -c make test
   release:
-    name: Restart the service
+    name: Restarts the clock
     runs-on: self-hosted
     needs: test
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: read
     steps:
-      - name: Restart quintus service
+      - name: Tick tock
         run: systemctl restart quintus.service
