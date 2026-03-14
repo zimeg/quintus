@@ -131,4 +131,3 @@ func (n Now) Month() int {
 func (n Now) Date() int {
 	return n.date
 }
-
