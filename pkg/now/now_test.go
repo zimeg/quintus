@@ -9,7 +9,9 @@ import (
 )
 
 func TestMoment(t *testing.T) {
-	tz, err := time.LoadLocation("America/Phoenix")
+	stable, err := time.LoadLocation("America/Phoenix")
+	require.NoError(t, err)
+	season, err := time.LoadLocation("America/Los_Angeles")
 	require.NoError(t, err)
 	tests := map[string]struct {
 		now      time.Time
@@ -117,9 +119,19 @@ func TestMoment(t *testing.T) {
 			epoch:    time.Date(2100, 1, 1, 0, 0, 0, 0, time.UTC).Unix(),
 		},
 		"adjust output times to account for some timezone preference": {
-			now:      time.Date(2026, 1, 1, 0, 0, 0, 0, tz),
+			now:      time.Date(2026, 1, 1, 0, 0, 0, 0, stable),
 			expected: "2026-01-01T00:00:00-07:00",
-			epoch:    time.Date(2026, 1, 1, 0, 0, 0, 0, tz).Unix(),
+			epoch:    time.Date(2026, 1, 1, 0, 0, 0, 0, stable).Unix(),
+		},
+		"display the standard time offset for a winter date in changing": {
+			now:      time.Date(2022, 2, 22, 0, 0, 0, 0, season),
+			expected: "2022-02-23T00:00:00-08:00",
+			epoch:    time.Date(2022, 2, 23, 0, 0, 0, 0, season).Unix(),
+		},
+		"display the daylight time offset for a summer date in changing": {
+			now:      time.Date(2022, 7, 22, 0, 0, 0, 0, season),
+			expected: "2022-07-23T00:00:00-07:00",
+			epoch:    time.Date(2022, 7, 23, 0, 0, 0, 0, season).Unix(),
 		},
 	}
 	for name, tt := range tests {

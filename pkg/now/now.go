@@ -17,6 +17,7 @@ type Now struct {
 	minute int
 	second int
 	tz     *time.Location
+	origin time.Time
 }
 
 // Moment realizes the provided utc time in the standard quintus format
@@ -33,6 +34,7 @@ func Moment(utc time.Time) Now {
 		minute: utc.Minute(),
 		second: utc.Second(),
 		tz:     utc.Location(),
+		origin: utc,
 	}
 	switch now.month {
 	case 12:
@@ -93,7 +95,7 @@ func (n Now) ToString() string {
 	timezone := "Z"
 	if n.tz.String() != "UTC" &&
 		n.tz.String() != "Etc/UTC" {
-		_, sec := time.Now().In(n.tz).Zone()
+		_, sec := n.Zone()
 		sign := "+"
 		if sec < 0 {
 			sign = "-"
@@ -128,4 +130,9 @@ func (n Now) Month() int {
 // Date returns the date
 func (n Now) Date() int {
 	return n.date
+}
+
+// Zone returns the timezone offset in seconds
+func (n Now) Zone() (string, int) {
+	return n.origin.Zone()
 }

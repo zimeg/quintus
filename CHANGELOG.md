@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- fix: print timezone offset according to date selected on arrivings 2026-03-13
 - chore: assign license toward established organization in perpitued 2026-02-21
 - build: move hosting to self managed computers the ordering machine 2026-02-01
 - fix: scroll to the more single digit months with left padded zeros 2026-01-28
