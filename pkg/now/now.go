@@ -95,7 +95,7 @@ func (n Now) ToString() string {
 	timezone := "Z"
 	if n.tz.String() != "UTC" &&
 		n.tz.String() != "Etc/UTC" {
-		_, sec := n.Zone()
+		_, sec := n.origin.Zone()
 		sign := "+"
 		if sec < 0 {
 			sign = "-"
@@ -132,7 +132,3 @@ func (n Now) Date() int {
 	return n.date
 }
 
-// Zone returns the timezone offset in seconds
-func (n Now) Zone() (string, int) {
-	return n.origin.Zone()
-}
