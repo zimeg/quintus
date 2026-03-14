@@ -44,7 +44,7 @@ func (u UTC) ToString() string {
 	timezone := "Z"
 	if u.moment.Location().String() != "UTC" &&
 		u.moment.Location().String() != "Etc/UTC" {
-		_, sec := time.Now().In(u.moment.Location()).Zone()
+		_, sec := u.moment.Zone()
 		sign := "+"
 		if sec < 0 {
 			sign = "-"
