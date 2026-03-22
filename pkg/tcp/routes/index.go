@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/zimeg/quintus/pkg/now"
@@ -26,10 +27,17 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		location = time.UTC
 	}
 	current := now.Moment(time.Now().In(location))
+	jump := fmt.Sprintf("%02d", current.Month())
+	year := current.Year()
 	if r.URL.Path != "/" {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Fprintf(w, "%d-04-04T03:55:05Z", current.Year())
-		return
+		y, err := strconv.Atoi(r.URL.Path[1:])
+		if err != nil {
+			w.WriteHeader(http.StatusNotFound)
+			fmt.Fprintf(w, "%d-04-04T03:55:05Z", current.Year())
+			return
+		}
+		year = y
+		jump = "00"
 	}
 	funcs := template.FuncMap{
 		"add": func(i, j int) int {
@@ -65,7 +73,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	<body>
 		<form autocomplete="off">
 			<header>
-				<h1>Quintus Calendars</h1>
+				<h1><a href="/">Quintus Calendars</a></h1>
 				<nav>
 					<a
 						href="https://o526.net/blog/post/five-day-week"
@@ -120,37 +128,28 @@ func Index(w http.ResponseWriter, r *http.Request) {
 			<main>
 				<table>
 					<tbody>
-						<tr id="before"></tr>
-						{{ .Prev }}
-						<tr hx-get="/cal/{{ add .Time.Year -2 }}"
-							hx-target="#before"
-							hx-trigger="revealed once"
-							hx-swap="outerHTML show:[id='{{ .Time.Year }}-00']:top"
-						>
+						<tr>
+							<th colspan="6">
+								<a href="/{{ add .Year -1 }}">{{ add .Year -1 }}-00</a>
+							</th>
 						</tr>
 						{{ .Curr }}
-						<tr hx-get="/cal/{{ add .Time.Year 2 }}"
-							hx-target="#after"
+						{{ .Next }}
+						<tr id="after"
+							hx-get="/cal/{{ add .Year 2 }}"
 							hx-trigger="revealed once"
 							hx-swap="outerHTML"
 						>
+							<th colspan="6">{{ add .Year 2 }}-00</th>
 						</tr>
-						{{ .Next }}
-						<tr id="after"></tr>
 					</tbody>
 				</table>
 			</main>
 		</form>
 		<script src="https://unpkg.com/htmx.org@2.0.2"></script>
 		<script>
-		htmx.on('htmx:afterSwap', (e) => {
-			setTimeout(() => {
-				document.querySelectorAll("tr[hx-disable]").forEach((el) => el.removeAttribute("hx-disable"));
-				htmx.process(document.body);
-			}, 120);
-		});
 		if (!location.hash) {
-			document.getElementById("{{ .Time.Year }}-{{ printf "%02d" .Time.Month }}").scrollIntoView();
+			document.getElementById("{{ .Jump }}").scrollIntoView();
 		}
 		</script>
 	</body>
@@ -160,19 +159,13 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%s", current.ToString())
 		return
 	}
-	prev, err := calendar(current.Year()-1, current)
+	curr, err := calendar(year, current)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
 		return
 	}
-	curr, err := calendar(current.Year(), current)
-	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
-		return
-	}
-	next, err := calendar(current.Year()+1, current)
+	next, err := calendar(year+1, current)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
@@ -181,13 +174,15 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		UTC  string
 		Time now.Now
-		Prev template.HTML
+		Year int
+		Jump string
 		Curr template.HTML
 		Next template.HTML
 	}{
 		UTC:  utc.Current().In(location).ToString(),
 		Time: current,
-		Prev: template.HTML(prev.String()),
+		Year: year,
+		Jump: jump,
 		Curr: template.HTML(curr.String()),
 		Next: template.HTML(next.String()),
 	}
