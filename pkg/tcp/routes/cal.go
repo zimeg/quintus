@@ -31,10 +31,11 @@ func calendar(year int, today now.Now) (w bytes.Buffer, err error) {
 	tpl := `
 {{- range $offset, $month := .Cal.Months -}}
 {{- $d := index $month 0 -}}
-{{- $id := printf "%d-%02d" $d.Quintus.Year $d.Quintus.Month }}
 <tr>
-	<th id="{{ $id }}" colspan="6">
-		<a href="#{{ $id }}">{{ $id }}</a>
+	<th id="{{ printf "%02d" $d.Quintus.Month }}" colspan="6">
+		<a href="/{{ printf "%d#%02d" $d.Quintus.Year $d.Quintus.Month }}">
+			{{- printf "%d-%02d" $d.Quintus.Year $d.Quintus.Month -}}
+		</a>
 	</th>
 </tr>
 <tr>
@@ -107,37 +108,17 @@ func Cal(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintf(w, "%d-05-00T03:55:05Z", current.Year())
 		return
 	}
-	switch {
-	case year < current.Year():
-		fmt.Fprintf(w, `
-<tr id="before"></tr>
+	fmt.Fprintf(w, `
 %s
-<tr hx-get="/cal/%d"
-	hx-disable
-	hx-target="#before"
-	hx-trigger="revealed once"
-	hx-swap="outerHTML show:[id='%d-00']:top"
->
-</tr>`,
-			strings.TrimSpace(cal.String()),
-			year-1,
-			year+1,
-		)
-	case year > current.Year():
-		fmt.Fprintf(w, `
-<tr hx-get="/cal/%d"
-	hx-disable
-	hx-target="#after"
+<tr id="after"
+	hx-get="/cal/%d"
 	hx-trigger="revealed once"
 	hx-swap="outerHTML"
 >
-%s
-<tr id="after"></tr>
-		`,
-			year+1,
-			strings.TrimSpace(cal.String()),
-		)
-	default:
-		fmt.Fprintf(w, `%s`, strings.TrimSpace(cal.String()))
-	}
+	<th colspan="6">%d-00</th>
+</tr>`,
+		strings.TrimSpace(cal.String()),
+		year+1,
+		year+1,
+	)
 }

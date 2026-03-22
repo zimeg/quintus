@@ -206,6 +206,9 @@
     padding-top: calc(var(--spacing) * 3);
     font-size: var(--text-2xl);
     line-height: var(--tw-leading, var(--text-2xl--line-height));
+    a {
+      text-decoration-line: none;
+    }
   }
   header {
     background-color: var(--color-white);

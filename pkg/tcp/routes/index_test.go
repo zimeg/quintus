@@ -20,15 +20,14 @@ func TestIndex(t *testing.T) {
 		"headers": {
 			expected: []string{
 				"<title>Quintus Calendars</title>",
-				"<h1>Quintus Calendars</h1>",
+				`<h1><a href="/">Quintus Calendars</a></h1>`,
 			},
 			status: 200,
 		},
 		"scroll": {
 			expected: []string{
 				fmt.Sprintf(
-					"document.getElementById(\"%d-%02d\").scrollIntoView();",
-					current.Year(),
+					"document.getElementById(\"%02d\").scrollIntoView();",
 					current.Month(),
 				),
 			},

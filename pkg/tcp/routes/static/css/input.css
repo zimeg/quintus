@@ -17,6 +17,9 @@
   }
   h1 {
     @apply pt-3 text-2xl;
+    a {
+      @apply no-underline;
+    }
   }
   header {
     @apply bg-white;
