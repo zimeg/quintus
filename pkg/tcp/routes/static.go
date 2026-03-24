@@ -33,13 +33,13 @@ func StaticFaviconDefault(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", staticFaviconDefault)
 }
 
-//go:embed static/favicon/favicon-32x32.png
-var staticFaviconSmall string
+//go:embed static/favicon/favicon-512x512.png
+var staticFaviconLarge string
 
-// StaticFaviconSmall has the small favicon
-func StaticFaviconSmall(w http.ResponseWriter, r *http.Request) {
+// StaticFaviconLarge has the large favicon
+func StaticFaviconLarge(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/png")
-	fmt.Fprintf(w, "%s", staticFaviconSmall)
+	fmt.Fprintf(w, "%s", staticFaviconLarge)
 }
 
 //go:embed static/favicon/favicon-192x192.png
@@ -51,13 +51,13 @@ func StaticFaviconMedium(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", staticFaviconMedium)
 }
 
-//go:embed static/favicon/favicon-512x512.png
-var staticFaviconLarge string
+//go:embed static/favicon/favicon-32x32.png
+var staticFaviconSmall string
 
-// StaticFaviconLarge has the large favicon
-func StaticFaviconLarge(w http.ResponseWriter, r *http.Request) {
+// StaticFaviconSmall has the small favicon
+func StaticFaviconSmall(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "image/png")
-	fmt.Fprintf(w, "%s", staticFaviconLarge)
+	fmt.Fprintf(w, "%s", staticFaviconSmall)
 }
 
 //go:embed static/robots.txt
@@ -67,6 +67,15 @@ var staticRobots string
 func StaticRobots(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	fmt.Fprintf(w, "%s", staticRobots)
+}
+
+//go:embed static/shop.png
+var staticShop string
+
+// StaticShop returns the shop image
+func StaticShop(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "image/png")
+	fmt.Fprintf(w, "%s", staticShop)
 }
 
 //go:embed static/sitemap.xml

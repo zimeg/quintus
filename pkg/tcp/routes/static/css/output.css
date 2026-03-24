@@ -214,7 +214,7 @@
     background-color: var(--color-white);
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
-    height: calc(var(--spacing) * 36);
+    min-height: calc(var(--spacing) * 36);
     left: calc(var(--spacing) * 0);
     padding: calc(var(--spacing) * 2);
     position: sticky;
@@ -229,6 +229,30 @@
     @media (width >= 64rem) {
       width: calc(var(--spacing) * 96);
     }
+  }
+  nav a {
+    cursor: pointer;
+  }
+  nav a.active {
+    text-decoration-thickness: 2px;
+  }
+  #info {
+    font-size: var(--text-sm);
+    line-height: var(--tw-leading, var(--text-sm--line-height));
+    padding-block: calc(var(--spacing) * 2);
+  }
+  #info ul {
+    list-style-type: "–\00a0";
+    padding-left: calc(var(--spacing) * 5);
+  }
+  #info img {
+    display: none;
+    @media (width >= 64rem) {
+      display: block;
+    }
+  }
+  #info:empty {
+    display: none;
   }
   input[type="radio"] {
     cursor: pointer;
