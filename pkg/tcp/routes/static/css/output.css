@@ -235,9 +235,8 @@
     line-height: var(--tw-leading, var(--text-sm--line-height));
     padding-block: calc(var(--spacing) * 2);
   }
-  #info ul {
-    list-style-type: "–\00a0";
-    padding-left: calc(var(--spacing) * 5);
+  #info:empty {
+    display: none;
   }
   #info img {
     display: none;
@@ -245,8 +244,9 @@
       display: block;
     }
   }
-  #info:empty {
-    display: none;
+  #info ul {
+    list-style-type: "–\00a0";
+    padding-left: calc(var(--spacing) * 5);
   }
   input[type="radio"] {
     cursor: pointer;

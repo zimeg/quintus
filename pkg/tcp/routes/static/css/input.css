@@ -38,16 +38,16 @@
     @apply text-sm;
     @apply py-2;
   }
-  #info ul {
-    @apply list-["–\00a0"];
-    @apply pl-5;
+  #info:empty {
+    @apply hidden;
   }
   #info img {
     @apply hidden;
     @apply lg:block;
   }
-  #info:empty {
-    @apply hidden;
+  #info ul {
+    @apply list-["–\00a0"];
+    @apply pl-5;
   }
   input[type="radio"] {
     @apply cursor-pointer;
