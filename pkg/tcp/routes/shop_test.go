@@ -25,7 +25,7 @@ func TestShop(t *testing.T) {
 		},
 		"links to the stripe checkout for purchasing a calendar print": {
 			htmx:     true,
-			contains: "buy.stripe.com",
+			contains: "https://buy.stripe.com/cNiaEZ0G56p5eQFgiB9EI00",
 		},
 		"returns a full page with doctype for direct visits": {
 			htmx:     false,
