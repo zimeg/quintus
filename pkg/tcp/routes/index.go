@@ -27,15 +27,31 @@ func Index(w http.ResponseWriter, r *http.Request) {
 		location = time.UTC
 	}
 	current := now.Moment(time.Now().In(location))
-	jump := fmt.Sprintf("%02d", current.Month())
-	year := current.Year()
 	if r.URL.Path != "/" {
-		y, err := strconv.Atoi(r.URL.Path[1:])
-		if err != nil {
+		if _, err := strconv.Atoi(r.URL.Path[1:]); err != nil {
 			w.WriteHeader(http.StatusNotFound)
 			fmt.Fprintf(w, "%d-04-04T03:55:05Z", current.Year())
 			return
 		}
+	}
+	index(w, r, "")
+}
+
+// index renders the full page with an optional info section pre-filled
+func index(w http.ResponseWriter, r *http.Request, info template.HTML) {
+	cookie, _ := r.Cookie("timezone")
+	timezone := "Etc/UTC"
+	if cookie != nil {
+		timezone = cookie.Value
+	}
+	location, err := time.LoadLocation(timezone)
+	if err != nil {
+		location = time.UTC
+	}
+	current := now.Moment(time.Now().In(location))
+	year := current.Year()
+	jump := fmt.Sprintf("%02d", current.Month())
+	if y, err := strconv.Atoi(r.URL.Path[1:]); err == nil {
 		year = y
 		jump = "00"
 	}
@@ -76,19 +92,19 @@ func Index(w http.ResponseWriter, r *http.Request) {
 				<h1><a href="/">Quintus Calendars</a></h1>
 				<nav>
 					<a
-						href="https://o526.net/blog/post/five-day-week"
-						target="_blank"
-						title="the five day week"
+						hx-get="/about"
+						hx-target="#info"
+						hx-swap="innerHTML"
 					>about</a>
 					<a
-						href="https://buy.stripe.com/cNiaEZ0G56p5eQFgiB9EI00"
-						target="_blank"
-						title="checkout"
+						hx-get="/shop"
+						hx-target="#info"
+						hx-swap="innerHTML"
 					>shop</a>
 					<a
-						href="https://github.com/zimeg/quintus"
-						target="_blank"
-						title="github repo"
+						hx-get="/source"
+						hx-target="#info"
+						hx-swap="innerHTML"
 					>source</a>
 				</nav>
 				<article
@@ -124,6 +140,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 						</time>
 					</p>
 				</article>
+				<section id="info">{{.Info}}</section>
 			</header>
 			<main>
 				<table>
@@ -174,6 +191,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	data := struct {
 		UTC  string
 		Time now.Now
+		Info template.HTML
 		Year int
 		Jump string
 		Curr template.HTML
@@ -181,6 +199,7 @@ func Index(w http.ResponseWriter, r *http.Request) {
 	}{
 		UTC:  utc.Current().In(location).ToString(),
 		Time: current,
+		Info: info,
 		Year: year,
 		Jump: jump,
 		Curr: template.HTML(curr.String()),

@@ -24,8 +24,8 @@
   header {
     @apply bg-white;
     @apply border-b;
-    @apply h-36;
     @apply left-0;
+    @apply min-h-36;
     @apply p-2;
     @apply sticky;
     @apply top-0;
@@ -33,6 +33,21 @@
     @apply lg:fixed;
     @apply lg:h-full;
     @apply lg:w-96;
+  }
+  #info {
+    @apply text-sm;
+    @apply py-2;
+  }
+  #info:empty {
+    @apply hidden;
+  }
+  #info img {
+    @apply hidden;
+    @apply lg:block;
+  }
+  #info ul {
+    @apply list-["–\00a0"];
+    @apply pl-5;
   }
   input[type="radio"] {
     @apply cursor-pointer;
@@ -43,6 +58,12 @@
   nav {
     @apply pb-2;
     @apply text-sm;
+  }
+  nav a {
+    @apply cursor-pointer;
+  }
+  nav a.active {
+    @apply decoration-2;
   }
   table {
     @apply table-fixed;

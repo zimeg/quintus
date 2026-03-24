@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- feat: output pages as routes for additional details for selections 2026-03-22
 - fix: remove infinite scroll backward in preference for times ahead 2026-03-21
 - fix: print timezone offset according to date selected on arrivings 2026-03-13
 - chore: assign license toward established organization in perpitued 2026-02-21
