@@ -214,8 +214,8 @@
     background-color: var(--color-white);
     border-bottom-style: var(--tw-border-style);
     border-bottom-width: 1px;
-    min-height: calc(var(--spacing) * 36);
     left: calc(var(--spacing) * 0);
+    min-height: calc(var(--spacing) * 36);
     padding: calc(var(--spacing) * 2);
     position: sticky;
     top: calc(var(--spacing) * 0);
@@ -229,12 +229,6 @@
     @media (width >= 64rem) {
       width: calc(var(--spacing) * 96);
     }
-  }
-  nav a {
-    cursor: pointer;
-  }
-  nav a.active {
-    text-decoration-thickness: 2px;
   }
   #info {
     font-size: var(--text-sm);
@@ -266,6 +260,12 @@
     padding-bottom: calc(var(--spacing) * 2);
     font-size: var(--text-sm);
     line-height: var(--tw-leading, var(--text-sm--line-height));
+  }
+  nav a {
+    cursor: pointer;
+  }
+  nav a.active {
+    text-decoration-thickness: 2px;
   }
   table {
     table-layout: fixed;
