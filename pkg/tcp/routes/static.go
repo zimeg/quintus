@@ -69,7 +69,7 @@ func StaticRobots(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "%s", staticRobots)
 }
 
-//go:embed static/shop.png
+//go:embed static/img/shop.png
 var staticShop string
 
 // StaticShop returns the shop image
