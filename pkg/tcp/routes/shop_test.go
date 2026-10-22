@@ -19,9 +19,9 @@ func TestShop(t *testing.T) {
 			htmx:     true,
 			contains: "shop.png",
 		},
-		"offers a pressing for ordering the 2027 calendar": {
+		"offers a pressing for ordering the current year": {
 			htmx:     true,
-			contains: "pressing for 2027",
+			contains: "pressing for this current year",
 		},
 		"shows the 2027 calendar price in the shop fragment": {
 			htmx:     true,
@@ -41,7 +41,7 @@ func TestShop(t *testing.T) {
 		},
 		"includes the shop content in the full page for direct visits": {
 			htmx:     false,
-			contains: "pressing for 2027",
+			contains: "pressing for this current year",
 		},
 	}
 	for name, tt := range tests {

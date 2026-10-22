@@ -9,7 +9,7 @@ import (
 // Shop offers printed quintus calendars for purchase
 func Shop(w http.ResponseWriter, r *http.Request) {
 	content := `<ul>
-<li>Order a pressing for 2027.</li>
+<li>Order a pressing for this current year.</li>
 <li>$20.27</li>
 <li><a href="https://buy.stripe.com/3cI7sNfAZfZFaAp9Ud9EI01" target="_blank">Checkout</a>. <a href="mailto:calendar@quintus.sh">Contact</a>.</li>
 </ul>
