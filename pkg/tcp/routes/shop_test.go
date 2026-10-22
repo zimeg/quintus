@@ -23,9 +23,17 @@ func TestShop(t *testing.T) {
 			htmx:     true,
 			contains: "pressing for this current year",
 		},
+		"shows the 2027 calendar price in the shop fragment": {
+			htmx:     true,
+			contains: "$20.27",
+		},
+		"shows the 2027 calendar price on direct visits": {
+			htmx:     false,
+			contains: "$20.27",
+		},
 		"links to the stripe checkout for purchasing a calendar print": {
 			htmx:     true,
-			contains: "https://buy.stripe.com/cNiaEZ0G56p5eQFgiB9EI00",
+			contains: "https://buy.stripe.com/3cI7sNfAZfZFaAp9Ud9EI01",
 		},
 		"returns a full page with doctype for direct visits": {
 			htmx:     false,

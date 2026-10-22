@@ -8,6 +8,7 @@ calendar.
 
 ## Changes
 
+- chore: replace checkout link with calendar prints of upcoming time 2026-10-24
 - feat: output pages as routes for additional details for selections 2026-03-22
 - fix: remove infinite scroll backward in preference for times ahead 2026-03-21
 - fix: print timezone offset according to date selected on arrivings 2026-03-13
