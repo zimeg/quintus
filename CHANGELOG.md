@@ -8,8 +8,7 @@ calendar.
 
 ## Changes
 
-- fix: update the shop checkout link for printed calendars for 2027 2026-10-25
-
+- chore: update checkout and price for 2027 calendars 2026-10-25
 - feat: output pages as routes for additional details for selections 2026-03-22
 - fix: remove infinite scroll backward in preference for times ahead 2026-03-21
 - fix: print timezone offset according to date selected on arrivings 2026-03-13
