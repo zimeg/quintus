@@ -19,13 +19,13 @@ func TestShop(t *testing.T) {
 			htmx:     true,
 			contains: "shop.png",
 		},
-		"offers a pressing for ordering the current year": {
+		"offers a pressing for ordering the 2027 calendar": {
 			htmx:     true,
-			contains: "pressing for this current year",
+			contains: "pressing for 2027",
 		},
 		"links to the stripe checkout for purchasing a calendar print": {
 			htmx:     true,
-			contains: "https://buy.stripe.com/cNiaEZ0G56p5eQFgiB9EI00",
+			contains: "https://buy.stripe.com/3cI7sNfAZfZFaAp9Ud9EI01",
 		},
 		"returns a full page with doctype for direct visits": {
 			htmx:     false,
@@ -33,7 +33,7 @@ func TestShop(t *testing.T) {
 		},
 		"includes the shop content in the full page for direct visits": {
 			htmx:     false,
-			contains: "pressing for this current year",
+			contains: "pressing for 2027",
 		},
 	}
 	for name, tt := range tests {
